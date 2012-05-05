@@ -4,8 +4,6 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		Kontroler
-		Widok 
-		Algorytm algorytm = 
+		Kontroler kontroler = new Kontroler();
 	}
 }
