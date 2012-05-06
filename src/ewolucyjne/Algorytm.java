@@ -6,35 +6,57 @@ public class Algorytm
 {
 	private int mi;
 	private int lambda;
-	private float maxX;//array
-	private float minX;//array
-	private float maxY;//array
-	private float minY;//array
 	private int rodzajAlgorytmu;
-	public ArrayList<Osobnik> populacja;
 	private float wspolczynnikInterpolacji;
-	private float sigmaX;//array
-	private float sigmaY;//array
+	private ArrayList<Zakres> zakres;
+	private ArrayList<Float> sigmy;
+	
+	public ArrayList<Osobnik> populacja;
 	//private ArrayList<Osobnik> potomkowie;
 	
 	Algorytm (int mi, int lambda, int rodzajAlgorytmu, float wspolczynnikInterpolacji, 
-			ArrayLista<Zakres> zakres, ArrayLista<Float> Sigmy)
+			ArrayList<Zakres> zakres, ArrayList<Float> sigmy)
 	{
 		this.mi = mi;
+		this.lambda = lambda;
+		this.rodzajAlgorytmu = rodzajAlgorytmu;
+		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
+		this.zakres = zakres;
+		this.sigmy = sigmy;
+		
+		for (int i=0; i<this.mi ; i++)
+		{
+			populacja.add(this.stworzOsobnika(zakres, this.sigmy));
+			
+		}
+		
 	}
 	
 	Osobnik stworzPotomka(Osobnik mama, Osobnik tata) 
 	{
-		return Osobnik;
+		return null;
 	}
 	
-	ArrayList<Osobnik> stworzPokolenie(); 
+	Osobnik stworzOsobnika(ArrayList<Zakres> zakresy, ArrayList<Float> sigmy) 
+	{
+		return null;
+	}
 	
-	ArrayList<Osobnik> Selekcja(ArrayList<Osobnik> potomkowie);
+	ArrayList<Osobnik> stworzPokolenie() {
+		return null;
+	} 
 	
-	boolean warunekStopu();
+	ArrayList<Osobnik> Selekcja(ArrayList<Osobnik> potomkowie) {
+		return null;
+	}
 	
-	Osobnik wybierzNajlepszego();
+	boolean warunekStopu() {
+		return false;
+	}
+	
+	Osobnik wybierzNajlepszego() {
+		return null;
+	}
 	
 	
 }
