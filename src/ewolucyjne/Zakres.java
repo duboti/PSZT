@@ -8,7 +8,12 @@ package ewolucyjne;
  *
  */
 public class Zakres {
-	//TODO
+	/**
+	 * TODO
+	 * dodaæ metody która zwróci pocz¹tek i koniec zakresu
+	 * @return
+	 */
+	
 	public boolean czyNalezy()
 	{
 		return false;
