@@ -54,7 +54,7 @@ public class Algorytm
 		if (rodzajAlgorytmu==0)
 		{
 			populacja.addAll(potomkowie);
-			Collections.sort(populacja, new Comparator());
+			Collections.sort(populacja, new OsobnikComparator());
 			for (int i=mi+lambda ; i>mi ; i-- )
 			{
 				populacja.remove(i);
