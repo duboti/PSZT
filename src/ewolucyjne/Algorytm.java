@@ -34,6 +34,7 @@ public class Algorytm
 	
 	Osobnik stworzPotomka(Osobnik mama, Osobnik tata) 
 	{
+		
 		return null;
 	}
 	
@@ -42,19 +43,32 @@ public class Algorytm
 		return null;
 	}
 	
-	ArrayList<Osobnik> stworzPokolenie() {
+	ArrayList<Osobnik> stworzNastepnePokolenie() 
+	{
+		
 		return null;
 	} 
 	
-	ArrayList<Osobnik> Selekcja(ArrayList<Osobnik> potomkowie) {
-		return null;
+	void Selekcja(ArrayList<Osobnik> potomkowie) 
+	{
+		if (rodzajAlgorytmu==0)
+		{
+			populacja.addAll(potomkowie);
+			Collections.sort(populacja, new Comparator());
+			for (int i=mi+lambda ; i>mi ; i-- )
+			{
+				populacja.remove(i);
+			}
+		}
 	}
 	
-	boolean warunekStopu() {
+	boolean warunekStopu() 
+	{
 		return false;
 	}
 	
-	Osobnik wybierzNajlepszego() {
+	Osobnik wybierzNajlepszego() 
+	{
 		return null;
 	}
 	
