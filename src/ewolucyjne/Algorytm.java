@@ -22,8 +22,8 @@ public class Algorytm
 	
 	//private ArrayList<Osobnik> potomkowie;
 	
-	Algorytm (int mi, int lambda, int rodzajAlgorytmu, float wspolczynnikInterpolacji, 
-			ArrayList<Zakres> zakres, ArrayList<Float> sigmy)
+	Algorytm (int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, float wspolczynnikInterpolacji, 
+			ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
 	{
 		this.mi = mi;
 		this.lambda = lambda;
@@ -34,7 +34,7 @@ public class Algorytm
 		this.nrIteracji = 0;
 		this.etapAlgorytmu = 0;		
 		this.etapBezPoprawy = 0;
-		this.maxIteracji = 50;
+		this.maxIteracji = maxIteracji;
 		this.maxBezPoprawy = 5;
 		
 		for (int i=0; i<this.mi ; i++)
