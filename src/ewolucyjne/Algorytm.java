@@ -10,6 +10,7 @@ public class Algorytm
 	private float wspolczynnikInterpolacji;
 	private ArrayList<Zakres> zakres;
 	private ArrayList<Float> sigmy;
+	String typOsobnika = "Punkt";
 	
 	public ArrayList<Osobnik> populacja;
 	//private ArrayList<Osobnik> potomkowie;
@@ -26,7 +27,7 @@ public class Algorytm
 		
 		for (int i=0; i<this.mi ; i++)
 		{
-			populacja.add(this.stworzOsobnika(zakres, this.sigmy));
+			populacja.add(this.stworzOsobnika(typOsobnika, zakres, this.sigmy));
 			
 		}
 		
@@ -38,9 +39,39 @@ public class Algorytm
 		return null;
 	}
 	
-	Osobnik stworzOsobnika(ArrayList<Zakres> zakresy, ArrayList<Float> sigmy) 
+	Osobnik stworzOsobnika(String typOsobnika, ArrayList<Zakres> zakresy, ArrayList<Float> sigmy) 
 	{
-		return null;
+		Osobnik nowyOsobnik = null;
+		@SuppressWarnings("rawtypes")
+		Class cl = null;
+		try 
+		{
+			cl = Class.forName(typOsobnika);
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			System.out.println("Nie znaleziono klasy o nazwie "+typOsobnika);
+			e.printStackTrace();
+			return null;
+		}
+		try 
+		{
+			nowyOsobnik = (Osobnik)cl.newInstance();
+		} 
+		catch (InstantiationException e) 
+		{
+			System.out.println("Nie mo¿na stworzyæ klasy o nazwie "+typOsobnika);
+			e.printStackTrace();
+			return null;
+		} 
+		catch (IllegalAccessException e) 
+		{
+			System.out.println("Brak dostêpu do klasy o nazwie "+typOsobnika);
+			e.printStackTrace();
+			return null;
+		}
+		//TODO ustawiæ parametry osobnika takie jak sigmy itp.
+		return nowyOsobnik;
 	}
 	
 	ArrayList<Osobnik> stworzNastepnePokolenie() 
