@@ -56,5 +56,10 @@ public class Punkt implements Osobnik {
 		
 	}
 
+	@Override
+	public int pobierzIloscParametrow() {
+		return 2;
+	}
+
 	
 }
