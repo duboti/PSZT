@@ -65,7 +65,7 @@ public class Widok extends JFrame
 		scrollPane.setViewportView(konsola);
 		add(scrollPane);
 		
-		setPreferredSize(new Dimension(650, 650));
+		setPreferredSize(new Dimension(650, 670));
 		pack();
 		setVisible(true);
 	}

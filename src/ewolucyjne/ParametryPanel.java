@@ -15,6 +15,10 @@ class ParametryPanel extends JPanel
 	private JTextField minY2;
 	private JTextField maxX2;
 	private JTextField maxY2;
+	private JTextField sigmaX2;
+	private JTextField sigmaY2;
+	private JTextField epsilon2;
+	private JTextField maxIteracji2;
 	private JTextField wspolczynnikInterpolacji2;
 	private JComboBox rodzajAlgorytmu2;
 	
@@ -22,7 +26,7 @@ class ParametryPanel extends JPanel
 	{
 		double size[][] =
 	        {{0.25, 0.25, 0.25, 0.25},
-	         {30, 30, 30, 30}};
+	         {30, 30, 30, 30, 30, 30}};
 		TableLayout lay = new TableLayout(size);
 	    setLayout(lay);
 	    
@@ -32,15 +36,23 @@ class ParametryPanel extends JPanel
 		JLabel minY1 = new JLabel("min y: ");
 		JLabel maxX1 = new JLabel("max x: ");
 		JLabel maxY1 = new JLabel("max y: ");
+		JLabel sigmaX1 = new JLabel("σ x: ");
+		JLabel sigmaY1 = new JLabel("σ y: ");
+		JLabel epsilon1 = new JLabel("ε: ");
+		JLabel maxIteracji1 = new JLabel("max iteracji: ");
 		JLabel wspolczynnikInterpolacji1 = new JLabel("współczynnik interpolacji: ");
 		JLabel rodzajAlgorytmu1 = new JLabel("rodzaj algorytmu: ");
 		
 		mi2 = new JTextField("100", 5);
-		lambda2 = new JTextField("0.5", 5);
+		lambda2 = new JTextField("200", 5);
 		minX2 = new JTextField("-2.0", 5);
 		minY2 = new JTextField("-2.0", 5);
 		maxX2 = new JTextField("2.0", 5);
 		maxY2 = new JTextField("2.0", 5);
+		sigmaX2 = new JTextField("0.5", 5);
+		sigmaY2 = new JTextField("0.5", 5);
+		epsilon2 = new JTextField("0.01", 5);
+		maxIteracji2 = new JTextField("10000", 5);
 		wspolczynnikInterpolacji2 = new JTextField("0.5", 5);
 		rodzajAlgorytmu2 = new JComboBox(new String[] {"μ + λ","μ, λ"});
 		
@@ -56,10 +68,18 @@ class ParametryPanel extends JPanel
 		add(maxX2, "1 2 c c");
 		add(maxY1, "2 2 r c");
 		add(maxY2, "3 2 c c");
-		add(wspolczynnikInterpolacji1, "0 3 r c");
-		add(wspolczynnikInterpolacji2, "1 3 c c");
-		add(rodzajAlgorytmu1, "2 3 r c");
-		add(rodzajAlgorytmu2, "3 3 c c");
+		add(sigmaX1, "0 3 r c");
+		add(sigmaX2, "1 3 c c");
+		add(sigmaY1, "2 3 r c");
+		add(sigmaY2, "3 3 c c");
+		add(epsilon1, "0 4 r c");
+		add(epsilon2, "1 4 c c");
+		add(maxIteracji1, "2 4 r c");
+		add(maxIteracji2, "3 4 c c");
+		add(wspolczynnikInterpolacji1, "0 5 r c");
+		add(wspolczynnikInterpolacji2, "1 5 c c");
+		add(rodzajAlgorytmu1, "2 5 r c");
+		add(rodzajAlgorytmu2, "3 5 c c");
 	}
 	
 	ArrayList<String> Inicjuj ()
@@ -71,6 +91,10 @@ class ParametryPanel extends JPanel
 		parametry.add(minY2.getText());
 		parametry.add(maxX2.getText());
 		parametry.add(maxY2.getText());
+		parametry.add(sigmaX2.getText());
+		parametry.add(sigmaY2.getText());
+		parametry.add(epsilon2.getText());
+		parametry.add(maxIteracji2.getText());
 		parametry.add(wspolczynnikInterpolacji2.getText());
 		//if (rodzajAlgorytmu2.getSelectedItem())
 		parametry.add((String)rodzajAlgorytmu2.getSelectedItem());
