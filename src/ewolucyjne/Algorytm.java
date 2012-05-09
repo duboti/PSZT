@@ -15,6 +15,7 @@ public class Algorytm
 	private int etapAlgorytmu;				//w planowo ma to byc enum
 	private int etapBezPoprawy;
 	private int maxIteracji;
+	private int dokladnosc;
 	String typOsobnika = "Punkt";
 	private int maxBezPoprawy;
 	
@@ -22,7 +23,7 @@ public class Algorytm
 	
 	//private ArrayList<Osobnik> potomkowie;
 	
-	Algorytm (int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, float wspolczynnikInterpolacji, 
+	Algorytm (int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, int dokladnosc, float wspolczynnikInterpolacji, 
 			ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
 	{
 		this.mi = mi;
@@ -36,6 +37,7 @@ public class Algorytm
 		this.etapBezPoprawy = 0;
 		this.maxIteracji = maxIteracji;
 		this.maxBezPoprawy = 5;
+		this.dokladnosc = dokladnosc;
 		
 		for (int i=0; i<this.mi ; i++)
 		{
@@ -149,7 +151,7 @@ public class Algorytm
 		/**
 		 * W tym miejscu jest warunek który okresla minimalizacje badz maksymalizacje
 		 */
-		if (najlepszyWynik > populacja.get(0).pobierzWartosc())
+		if ( (najlepszyWynik - populacja.get(0).pobierzWartosc()) > dokladnosc)
 		{
 			etapBezPoprawy = 0;
 			najlepszyWynik = populacja.get(0).pobierzWartosc();
