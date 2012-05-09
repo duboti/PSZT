@@ -6,6 +6,7 @@ public class Kontroler extends Thread {
 
 	private Algorytm ewolucyjny;
 	private boolean pracuj;
+	private boolean zakonczony;
 	private Widok widok;
 	
 	
@@ -84,7 +85,7 @@ public class Kontroler extends Thread {
 			algorytm = 1;
 		this.ewolucyjny = new Algorytm("Punkt",mi,lambda,algorytm,maxIteracji,epsilon,wspInterpolacji,zakres,sigmy,new FunkcjaRosenbrocka());
 		this.pracuj = true;
-
+		this.zakonczony = false;
 		this.widok.dodajNapis(this.statystykiAlgorytmu());
 		return true;
 	}
@@ -93,7 +94,25 @@ public class Kontroler extends Thread {
 	 */
 	public void przerwij( )
 	{
-		pracuj = false;
+		this.pracuj = false;
+	}
+	/*
+	public boolean czyPracuje()
+	{
+		return this.pracuj;
+	}
+	
+	public boolean czyZakonczyl()
+	{
+		return this.zakonczony;
+	}*/
+	
+	public void uruchom( )
+	{
+		if(!this.pracuj)
+			this.start();
+		else
+			this.pracuj = true;
 	}
 	
 	public String statystykiAlgorytmu()
@@ -112,7 +131,7 @@ public class Kontroler extends Thread {
 	 */
 	public void krok( )
 	{
-		if(!this.pracuj)
+		if(this.zakonczony)
 			return;
 		ArrayList<Osobnik> pokolenie = this.ewolucyjny.stworzNastepnePokolenie();
 		this.ewolucyjny.mutujPopulacje(pokolenie);
@@ -128,7 +147,7 @@ public class Kontroler extends Thread {
 	
 	public void run()
 	{
-		if(!this.pracuj)
+		if(this.zakonczony)
 			return;
 		do{
 			
@@ -137,7 +156,16 @@ public class Kontroler extends Thread {
 			this.ewolucyjny.Selekcja(pokolenie);
 			this.widok.dodajNapis(statystykiAlgorytmu());
 			
-		}while(!this.ewolucyjny.warunekStopu() && this.pracuj);
+			while(!this.pracuj)
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+		}while(!this.ewolucyjny.warunekStopu() && this.zakonczony);
 		
 		return;
 	}

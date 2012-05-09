@@ -22,6 +22,9 @@ public class Widok extends JFrame
 	/*		!!!!!!!!!!!!!!!!!!!!!!!!!!  TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * 		Zamiast przekazywania konsoli stworz metode w widoku ktora dodaje
 	 * 		tekst do konsoli np void dodajNapis( String )
+	 * 		zamiast kontroler.start wywołuj kontroler.uruchom
+	 * 		
+	 * 		
 	 *		
 	 *		Poza blokowaniem przyciskow blokuj takze pola do wpisywania parametrow
 	 *		
