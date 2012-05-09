@@ -23,11 +23,11 @@ public class Kontroler extends Thread {
 	public boolean inicjowanie( ArrayList < String > in )
 	{
 		
-		Integer mi = Integer.getInteger(in.get(0));
+		Integer mi = Integer.parseInt(in.get(0));
 		if(mi == null || mi <= 0)
 			return false;
-		
-		Integer lambda = Integer.getInteger(in.get(1));
+	
+		Integer lambda = Integer.parseInt(in.get(1));
 		if(lambda == null || lambda<=mi)
 			return false;
 		
@@ -46,7 +46,7 @@ public class Kontroler extends Thread {
 		Float maxY = Float.parseFloat(in.get(5));
 		if(maxY == null || maxY < minY)
 			return false;
-		
+
 		ArrayList<Zakres> zakres = new ArrayList<Zakres>();
 		zakres.add(new Zakres (minX,maxX));
 		zakres.add(new Zakres (minY,maxY));		
@@ -64,14 +64,18 @@ public class Kontroler extends Thread {
 		sigmy.add(sigmaY);
 		
 		Float epsilon = Float.parseFloat(in.get(8));
+
 		if(epsilon == null || epsilon < 0)
 			return false;
 				
-		Integer maxIteracji = Integer.getInteger(in.get(9));
+
+		Integer maxIteracji = Integer.parseInt(in.get(9));
+
 		if(maxIteracji == null || maxIteracji <=0 )
 			return false;
 		
 		Float wspInterpolacji = Float.parseFloat(in.get(10));
+
 		if(wspInterpolacji == null || wspInterpolacji >= 1 || wspInterpolacji <= 0)
 			return false;
 		int algorytm;
@@ -79,9 +83,9 @@ public class Kontroler extends Thread {
 			algorytm = 0;
 		else
 			algorytm = 1;
-		
 		this.ewolucyjny = new Algorytm("Punkt",mi,lambda,algorytm,maxIteracji,epsilon,wspInterpolacji,zakres,sigmy,new FunkcjaRosenbrocka());
 		this.pracuj = true;
+
 		this.widok.dodajNapis(this.statystykiAlgorytmu());
 		return true;
 	}
