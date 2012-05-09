@@ -2,16 +2,12 @@ package ewolucyjne;
 
 import java.util.*;
 
-//TODO: "private int etapAlgorytmu" jest zle ustawiony, albo go usunac albo go porawic
-//TODO: dokonczyc funkjce mutujPopulacje
 public class Algorytm 
 {
 	private int mi;
 	private int lambda;
 	private int rodzajAlgorytmu;	//0-mi+lambda, 1-mi,lambda
 	private float wspolczynnikInterpolacji;
-//	private ArrayList<Zakres> zakres;
-//	private ArrayList<Float> sigmy;
 	private int nrIteracji;
 	private float najlepszyWynik;
 	// etapy algorytmu 1 - czeka na stworzenie nowego pokolenia
@@ -27,18 +23,16 @@ public class Algorytm
 	
 	public ArrayList<Osobnik> populacja;
 	
-	//private ArrayList<Osobnik> potomkowie;
 	
-	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, float dokladnosc, float wspolczynnikInterpolacji, 
-			ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
+	
+	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, float dokladnosc,
+			float wspolczynnikInterpolacji, ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
 	{
 		this.typOsobnika = typOsobnika;
 		this.mi = mi;
 		this.lambda = lambda;
 		this.rodzajAlgorytmu = rodzajAlgorytmu;
 		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
-//		this.zakres = zakres;
-//		this.sigmy = sigmy;
 		this.nrIteracji = 0;
 		this.etapAlgorytmu = 2;		
 		this.etapBezPoprawy = 0;
@@ -53,7 +47,8 @@ public class Algorytm
 		{
 			ArrayList<Float> parametry = new ArrayList<Float>();
 			for(int j = 0 ; j < zakres.size(); j++ )
-				parametry.add( ( (zakres.get(j)).koniec() - (zakres.get(j)).poczatek() )*generator.nextFloat() + (zakres.get(j)).poczatek());
+				parametry.add( ( (zakres.get(j)).koniec() - (zakres.get(j)).poczatek() )*
+											generator.nextFloat() + (zakres.get(j)).poczatek());
 			populacja.add(this.stworzOsobnika(parametry, sigmy));	
 		}
 		Collections.sort(populacja, new OsobnikComparator());
@@ -164,17 +159,17 @@ public class Algorytm
 	{
 		if (etapAlgorytmu==3)
 		{
-			switch (rodzajAlgorytmu) 
+			if (rodzajAlgorytmu == 0)
 			{
-			case 0:
 				populacja.addAll(potomkowie);
 				Collections.sort(populacja, new OsobnikComparator());
 				for (int i=mi+lambda ; i>mi ; i-- )
 				{
 					populacja.remove(i);
 				}
-				break;
-			case 1:
+			}
+			else if (rodzajAlgorytmu == 1)
+			{
 				populacja.clear();
 				populacja.addAll(potomkowie);
 				Collections.sort(populacja, new OsobnikComparator());
@@ -182,26 +177,35 @@ public class Algorytm
 				{
 					populacja.remove(i);
 				}
-			}	
-			nrIteracji++;
-			
-			/**
-			 * W tym miejscu jest warunek który okresla minimalizacje badz maksymalizacje
-			 * obecnie minimalizacja
-			 */
-			if ( (najlepszyWynik - populacja.get(0).pobierzWartosc() ) > dokladnosc)
-			{
-				etapBezPoprawy = 0;
-				najlepszyWynik = populacja.get(0).pobierzWartosc();
 			}
 			else
-			{
-				etapBezPoprawy++;
-			}
+				return;
+			
+			nrIteracji++;
+			
+			
+			sprawdzPoprawe();
 			
 			etapAlgorytmu = 1;
 		}	
 		
+	}
+	
+	/**
+	 * W tym miejscu jest warunek który okresla minimalizacje badz maksymalizacje
+	 * obecnie minimalizacja
+	 */
+	private void sprawdzPoprawe() 
+	{
+		if ( (najlepszyWynik - populacja.get(0).pobierzWartosc() ) > dokladnosc)
+		{
+			etapBezPoprawy = 0;
+			najlepszyWynik = populacja.get(0).pobierzWartosc();
+		}
+		else
+		{
+			etapBezPoprawy++;
+		}
 	}
 	
 	ArrayList<Osobnik> pobierzPopulacje()
