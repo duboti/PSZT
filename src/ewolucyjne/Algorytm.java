@@ -8,13 +8,16 @@ public class Algorytm
 {
 	private int mi;
 	private int lambda;
-	private int rodzajAlgorytmu;
+	private int rodzajAlgorytmu;	//0-mi+lambda, 1-mi,lambda
 	private float wspolczynnikInterpolacji;
-	private ArrayList<Zakres> zakres;
+//	private ArrayList<Zakres> zakres;
 //	private ArrayList<Float> sigmy;
 	private int nrIteracji;
 	private float najlepszyWynik;
-	private int etapAlgorytmu;				//w planowo ma to byc enum
+	// etapy algorytmu 1 - czeka na stworzenie nowego pokolenia
+	// etapy algorytmu 2 - czeka na mutacje populacji
+	// etapy algorytmu 3 - czeka na selekcje nastêpnej populacji
+	private int etapAlgorytmu;				//powinien byc enum
 	private int etapBezPoprawy;
 	private int maxIteracji;
 	private float dokladnosc;
@@ -34,10 +37,10 @@ public class Algorytm
 		this.lambda = lambda;
 		this.rodzajAlgorytmu = rodzajAlgorytmu;
 		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
-		this.zakres = zakres;
+//		this.zakres = zakres;
 //		this.sigmy = sigmy;
 		this.nrIteracji = 0;
-		this.etapAlgorytmu = 0;		
+		this.etapAlgorytmu = 2;		
 		this.etapBezPoprawy = 0;
 		this.maxIteracji = maxIteracji;
 		this.maxBezPoprawy = 5;
@@ -49,8 +52,8 @@ public class Algorytm
 		for (int i=0; i<this.mi ; i++)
 		{
 			ArrayList<Float> parametry = new ArrayList<Float>();
-			for(int j = 0 ; j < this.zakres.size(); j++ )
-				parametry.add( ( (this.zakres.get(j)).koniec() - (this.zakres.get(j)).poczatek() )*generator.nextFloat() + (this.zakres.get(j)).poczatek());
+			for(int j = 0 ; j < zakres.size(); j++ )
+				parametry.add( ( (zakres.get(j)).koniec() - (zakres.get(j)).poczatek() )*generator.nextFloat() + (zakres.get(j)).poczatek());
 			populacja.add(this.stworzOsobnika(parametry, sigmy));	
 		}
 		Collections.sort(populacja, new OsobnikComparator());
@@ -124,6 +127,11 @@ public class Algorytm
 		return nowyOsobnik;
 	}
 	
+	/**
+	 * metoda zwraca nowo stworzone pokolenie gdy algorytm by³ w etapie 1 i pzrechodzi w etap 2
+	 * w przeciwnym przypadku zwraca nulla
+	 * @return
+	 */
 	ArrayList<Osobnik> stworzNastepnePokolenie() 
 	{
 		if (etapAlgorytmu==1)	
@@ -147,33 +155,53 @@ public class Algorytm
 		}
 	} 
 	
+	/**
+	 * Wybiera spoœród starej populacji i nowego pokolenia now¹ populacje 
+	 * w zaleznoœci od rodzaju algorytmu
+	 * @param potomkowie
+	 */
 	void Selekcja(ArrayList<Osobnik> potomkowie) 
 	{
-		if (rodzajAlgorytmu==0)
+		if (etapAlgorytmu==3)
 		{
-			populacja.addAll(potomkowie);
-			Collections.sort(populacja, new OsobnikComparator());
-			for (int i=mi+lambda ; i>mi ; i-- )
+			switch (rodzajAlgorytmu) 
 			{
-				populacja.remove(i);
+			case 0:
+				populacja.addAll(potomkowie);
+				Collections.sort(populacja, new OsobnikComparator());
+				for (int i=mi+lambda ; i>mi ; i-- )
+				{
+					populacja.remove(i);
+				}
+				break;
+			case 1:
+				populacja.clear();
+				populacja.addAll(potomkowie);
+				Collections.sort(populacja, new OsobnikComparator());
+				for (int i=populacja.size() ; i>mi ; i-- )
+				{
+					populacja.remove(i);
+				}
+			}	
+			nrIteracji++;
+			
+			/**
+			 * W tym miejscu jest warunek który okresla minimalizacje badz maksymalizacje
+			 * obecnie minimalizacja
+			 */
+			if ( (najlepszyWynik - populacja.get(0).pobierzWartosc() ) > dokladnosc)
+			{
+				etapBezPoprawy = 0;
+				najlepszyWynik = populacja.get(0).pobierzWartosc();
 			}
-		}
-		nrIteracji++;
+			else
+			{
+				etapBezPoprawy++;
+			}
+			
+			etapAlgorytmu = 1;
+		}	
 		
-		/**
-		 * W tym miejscu jest warunek który okresla minimalizacje badz maksymalizacje
-		 */
-		if ( ( Math.abs( najlepszyWynik )- Math.abs(populacja.get(0).pobierzWartosc()) ) > dokladnosc)
-		{
-			etapBezPoprawy = 0;
-			najlepszyWynik = populacja.get(0).pobierzWartosc();
-		}
-		else
-		{
-			etapBezPoprawy++;
-		}
-		
-		etapAlgorytmu = 1;
 	}
 	
 	ArrayList<Osobnik> pobierzPopulacje()
@@ -186,18 +214,50 @@ public class Algorytm
 		return this.nrIteracji;
 	}
 	
+	/**
+	 * Dla algorytmu u+L : Losowanie do 5% osobnikow z populacji i wywolywanie metody mutuj
+	 * Dla algorytmu u,L : Losowanie do 5% osobnikow z ArrayList<Osobnik> potomkowie i wywolywanie metody mutuj
+	 * @param potomkowie
+	 */
 	void mutujPopulacje(ArrayList<Osobnik> potomkowie)
-	{
-		//TODO: 
-		/*Dla algorytmu u+L : Losowanie do 5% osobnikow z populacji i wywolywanie metody mutuj*/
-		/*Dla algorytmu u,L : Losowanie do 5% osobnikow z ArrayList<Osobnik> potomkowie i wywolywanie metody mutuj*/
+	{	
+		if (etapAlgorytmu == 2)
+		{
+			double procentMutacji = 0.05;
+			Random generator = new Random();
+			if (rodzajAlgorytmu==0)
+			{
+				for (Osobnik os: populacja)
+				{
+					if (generator.nextDouble() < procentMutacji)
+						populacja.get(populacja.indexOf(os)).mutuj();
+				}
+			} else if(rodzajAlgorytmu==1)
+			{
+				for (Osobnik os: potomkowie)
+				{
+					if (generator.nextDouble() < procentMutacji)
+						potomkowie.get(potomkowie.indexOf(os)).mutuj();
+				}
+			}
+			etapAlgorytmu = 3;
+		}
 	}
 	
+	/**
+	 * Zwraca prawdê gdy zosta³ spe³niony i algorytm powinien byc zatrzymany
+	 * w przeciwnym przypadku fa³sz
+	 * @return 
+	 */
 	boolean warunekStopu() 
 	{
 		return (nrIteracji>=maxIteracji || etapBezPoprawy>=maxBezPoprawy);
 	}
 	
+	/**
+	 * Zwraca osobnika posiadaj¹cego najlepsz¹ wartoœc funkcji przystosowania z populacji
+	 * @return
+	 */
 	Osobnik wybierzNajlepszego() 
 	{
 		return populacja.get(0);
