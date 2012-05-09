@@ -27,6 +27,12 @@ public interface Osobnik
 	 * 
 	 */
 	void mutuj();
+
+	/**
+	 *  
+	 * @return ile osobnik posiada parametrów
+	 */
+	int pobierzIloscParametrow();
 	
 	
 }
