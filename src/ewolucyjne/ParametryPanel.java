@@ -96,9 +96,40 @@ class ParametryPanel extends JPanel
 		parametry.add(epsilon2.getText());
 		parametry.add(maxIteracji2.getText());
 		parametry.add(wspolczynnikInterpolacji2.getText());
-		//if (rodzajAlgorytmu2.getSelectedItem())
 		parametry.add((String)rodzajAlgorytmu2.getSelectedItem());
 		return parametry;
+	}
+	
+	void zablokujParametry ()
+	{
+		mi2.setEnabled(false);
+		lambda2.setEnabled(false);
+		minX2.setEnabled(false);
+		minY2.setEnabled(false);
+		maxX2.setEnabled(false);
+		maxY2.setEnabled(false);
+		sigmaX2.setEnabled(false);
+		sigmaY2.setEnabled(false);
+		epsilon2.setEnabled(false);
+		maxIteracji2.setEnabled(false);
+		wspolczynnikInterpolacji2.setEnabled(false);
+		rodzajAlgorytmu2.setEnabled(false);
+	}
+	
+	void odblokujParametry ()
+	{
+		mi2.setEnabled(true);
+		lambda2.setEnabled(true);
+		minX2.setEnabled(true);
+		minY2.setEnabled(true);
+		maxX2.setEnabled(true);
+		maxY2.setEnabled(true);
+		sigmaX2.setEnabled(true);
+		sigmaY2.setEnabled(true);
+		epsilon2.setEnabled(true);
+		maxIteracji2.setEnabled(true);
+		wspolczynnikInterpolacji2.setEnabled(true);
+		rodzajAlgorytmu2.setEnabled(true);
 	}
 }
 

@@ -13,37 +13,26 @@ public class Widok extends JFrame
 	Kontroler kontroler;
 	JEditorPane konsola;
 	ArrayList<String> parametry;
+	Widok widok;
 	JButton przycisk1;
 	JButton przycisk2;
 	JButton przycisk3;
 	JButton przycisk4;
 	JButton przycisk5;
-	
-	/*		!!!!!!!!!!!!!!!!!!!!!!!!!!  TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * 		Zamiast przekazywania konsoli stworz metode w widoku ktora dodaje
-	 * 		tekst do konsoli np void dodajNapis( String )
-	 * 		zamiast kontroler.start wywołuj kontroler.uruchom
-	 * 		
-	 * 		
-	 *		
-	 *		Poza blokowaniem przyciskow blokuj takze pola do wpisywania parametrow
-	 *		
-	 * */
-	public void dodajNapis( String napis ){}
-	//----------------------
-	
+	JButton przycisk6;
 	
 	Widok ()
 	{
 		super("Algorytm ewolucyjny");
 		konsola = new JEditorPane();
-		kontroler = new Kontroler(this);
+		kontroler = null;
+		widok = this;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		
-		JLabel param = new JLabel("<html><center>Funkcja:  f(x,y) = (1 - x)<sup>2</sup> +" +
+		JLabel funkcja = new JLabel("<html><center>Funkcja:  f(x,y) = (1 - x)<sup>2</sup> +" +
 				" 100 (y - x<sup>2</sup>)<sup>2</sup> <br><br>Parametry algorytmu:<br></center></html>");
-		add(param);
+		add(funkcja);
 		
 		parametryPanel = new ParametryPanel();
 		add(parametryPanel);
@@ -52,21 +41,27 @@ public class Widok extends JFrame
 		przycisk2 = new JButton("1 krok algorytmu");
 		przycisk3 = new JButton("Znajdź rozwiązanie");
 		przycisk4 = new JButton("Zatrzymaj rozwiązywanie");
-		przycisk5 = new JButton("Wyczyść konsole");
+		przycisk5 = new JButton("Rozpocznij od nowa");
+		przycisk6 = new JButton("Wyczyść konsole");
 		
 		przycisk2.setEnabled(false);
 		przycisk3.setEnabled(false);
 		przycisk4.setEnabled(false);
+		przycisk5.setEnabled(false);
 		
 		przycisk1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				parametry = parametryPanel.Inicjuj();	
+				kontroler = new Kontroler(widok);
 				if (kontroler.inicjowanie(parametry))
 				{
+					przycisk1.setEnabled(false);
 					przycisk2.setEnabled(true);
 					przycisk3.setEnabled(true);
+					przycisk5.setEnabled(true);
+					parametryPanel.zablokujParametry();
 				}
 				else
 					konsola.setText(konsola.getText()+"Wysąpił błąd podczas inicjacji.\n");
@@ -85,10 +80,11 @@ public class Widok extends JFrame
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				kontroler.start();
+				kontroler.uruchom();
 				przycisk2.setEnabled(false);
 				przycisk3.setEnabled(false);
 				przycisk4.setEnabled(true);
+				przycisk5.setEnabled(false);
 			}
 		});
 		
@@ -100,10 +96,25 @@ public class Widok extends JFrame
 				przycisk2.setEnabled(true);
 				przycisk3.setEnabled(true);
 				przycisk4.setEnabled(false);
+				przycisk5.setEnabled(true);
+				kontroler = null;
 			}
 		});
 		
 		przycisk5.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				przycisk1.setEnabled(true);
+				przycisk2.setEnabled(false);
+				przycisk3.setEnabled(false);
+				przycisk4.setEnabled(false);
+				przycisk5.setEnabled(false);
+				parametryPanel.odblokujParametry();
+			}
+		});
+		
+		przycisk6.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -116,6 +127,7 @@ public class Widok extends JFrame
 		add(przycisk3);
 		add(przycisk4);
 		add(przycisk5);
+		add(przycisk6);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(500, 300));
@@ -133,6 +145,12 @@ public class Widok extends JFrame
 		przycisk2.setEnabled(false);
 		przycisk3.setEnabled(false);
 		przycisk4.setEnabled(false);
+		przycisk5.setEnabled(false);
+	}
+	
+	public void dodajNapis (String napis)
+	{
+		konsola.setText(konsola.getText()+napis+"\n");
 	}
 }
 
