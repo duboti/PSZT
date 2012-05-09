@@ -34,7 +34,7 @@ public class Algorytm
 		this.rodzajAlgorytmu = rodzajAlgorytmu;
 		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
 		this.nrIteracji = 0;
-		this.etapAlgorytmu = 2;		
+		this.etapAlgorytmu = 1;		
 		this.etapBezPoprawy = 0;
 		this.maxIteracji = maxIteracji;
 		this.maxBezPoprawy = 5;
@@ -163,7 +163,7 @@ public class Algorytm
 			{
 				populacja.addAll(potomkowie);
 				Collections.sort(populacja, new OsobnikComparator());
-				for (int i=mi+lambda ; i>mi ; i-- )
+				for (int i=populacja.size()-1 ; i>=mi ; i-- )
 				{
 					populacja.remove(i);
 				}
@@ -173,7 +173,7 @@ public class Algorytm
 				populacja.clear();
 				populacja.addAll(potomkowie);
 				Collections.sort(populacja, new OsobnikComparator());
-				for (int i=populacja.size() ; i>mi ; i-- )
+				for (int i=populacja.size()-1 ; i>=mi ; i-- )
 				{
 					populacja.remove(i);
 				}
