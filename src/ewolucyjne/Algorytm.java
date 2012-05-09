@@ -2,6 +2,9 @@ package ewolucyjne;
 
 import java.util.*;
 
+
+//TODO: "private int etapAlgorytmu" jest zle ustawiony, albo go usunac albo go porawic
+//TODO: dokonczyc funkjce mutujPopulacje
 public class Algorytm 
 {
 	private int mi;
@@ -160,7 +163,7 @@ public class Algorytm
 		/**
 		 * W tym miejscu jest warunek który okresla minimalizacje badz maksymalizacje
 		 */
-		if ( (najlepszyWynik - populacja.get(0).pobierzWartosc()) > dokladnosc)
+		if ( ( Math.abs( najlepszyWynik )- Math.abs(populacja.get(0).pobierzWartosc()) ) > dokladnosc)
 		{
 			etapBezPoprawy = 0;
 			najlepszyWynik = populacja.get(0).pobierzWartosc();
@@ -171,6 +174,23 @@ public class Algorytm
 		}
 		
 		etapAlgorytmu = 1;
+	}
+	
+	ArrayList<Osobnik> pobierzPopulacje()
+	{
+		return this.populacja;
+	}
+	
+	int pobierzNumerIteracji()
+	{
+		return this.nrIteracji;
+	}
+	
+	void mutujPopulacje(ArrayList<Osobnik> potomkowie)
+	{
+		//TODO: 
+		/*Dla algorytmu u+L : Losowanie do 5% osobnikow z populacji i wywolywanie metody mutuj*/
+		/*Dla algorytmu u,L : Losowanie do 5% osobnikow z ArrayList<Osobnik> potomkowie i wywolywanie metody mutuj*/
 	}
 	
 	boolean warunekStopu() 
