@@ -43,6 +43,7 @@ public class Algorytm
 		this.maxBezPoprawy = 5;
 		this.dokladnosc = dokladnosc;
 		this.funkcja = funkcja;
+		populacja = new ArrayList<Osobnik>();
 		
 		Random generator = new Random(); 
 		for (int i=0; i<this.mi ; i++)
