@@ -13,17 +13,6 @@ public class Widok extends JFrame
 	Kontroler kontroler;
 	JEditorPane konsola;
 	ArrayList<String> parametry;
-	/*		!!!!!!!!!!!!!!!!!!!!!!!!!!  TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * 		Zamiast przekazywania konsoli stworz metode w widoku ktora dodaje
-	 * 		tekst do konsoli np void dodajNapis( String )
-	 *		oraz przy tworzeniu obiektu Kontroler podawaj do konstruktora uchwyt this.
-	 *
-	 *
-	 *		Poza blokowaniem przyciskow blokuj takze pola do wpisywania parametrow
-	 *		do blokowania i odblokowywania sluza metody disable i enable
-	 * 
-	 * */
-	public void dodajNapis( String napis ){}
 	JButton przycisk1;
 	JButton przycisk2;
 	JButton przycisk3;
@@ -48,10 +37,11 @@ public class Widok extends JFrame
 		kontroler = new Kontroler(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
+		
 		JLabel param = new JLabel("<html><center>Funkcja:  f(x,y) = (1 - x)<sup>2</sup> +" +
 				" 100 (y - x<sup>2</sup>)<sup>2</sup> <br><br>Parametry algorytmu:<br></center></html>");
 		add(param);
-
+		
 		parametryPanel = new ParametryPanel();
 		add(parametryPanel);
 		

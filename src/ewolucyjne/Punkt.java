@@ -11,13 +11,9 @@ public class Punkt implements Osobnik {
 	private float sigmaY;
 	private float warFun;
 	private FunkcjaPrzystosowania func;
-	
 	Punkt( )
 	{}
-	public String toString()
-	{
-		return "Punkt( " + this.wspX + " , " + this.wspY + " ); Wartosr: " + this.warFun +"\n";
-	}
+	
 	@Override
 	public void inicjowanie( ArrayList<Float> parametry, ArrayList<Float> sigmy , FunkcjaPrzystosowania fun)
 	{

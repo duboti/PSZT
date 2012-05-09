@@ -2,10 +2,6 @@ package ewolucyjne;
 
 import java.util.*;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 72bfe9f228e99dfffd67bcec3b09ab2c3eb6c0f4
 //TODO: "private int etapAlgorytmu" jest zle ustawiony, albo go usunac albo go porawic
 //TODO: dokonczyc funkjce mutujPopulacje
 public class Algorytm 
