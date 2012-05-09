@@ -2,10 +2,18 @@ package ewolucyjne;
 
 import java.util.ArrayList;
 
+import javax.swing.*;
+
 public class Kontroler extends Thread {
 
 	private Algorytm ewolucyjny;
+	private JEditorPane konsola;
 	private boolean pracuj;
+	
+	Kontroler (JEditorPane kon)
+	{
+		konsola = kon;
+	}
 	
 	/**
 	 * Metoda tworzy obiekt klasy Algorytm
@@ -14,12 +22,11 @@ public class Kontroler extends Thread {
 	 */
 	public boolean inicjowanie( ArrayList < String > in )
 	{
-		
-		Integer mi = Integer.getInteger(in.get(0));
+		Integer mi = Integer.parseInt(in.get(0));
 		if(mi == null)
 			return false;
-		
-		Integer lambda = Integer.getInteger(in.get(1));
+
+		Integer lambda = Integer.parseInt(in.get(1));
 		if(lambda == null)
 			return false;
 		
@@ -38,7 +45,7 @@ public class Kontroler extends Thread {
 		Float maxY = Float.parseFloat(in.get(5));
 		if(maxY == null)
 			return false;
-		
+
 		ArrayList<Zakres> zakres = new ArrayList<Zakres>();
 		zakres.add(new Zakres (minX,maxX));
 		zakres.add(new Zakres (minY,maxY));		
@@ -59,7 +66,7 @@ public class Kontroler extends Thread {
 		if(epsilon == null)
 			return false;
 				
-		Integer maxIteracji = Integer.getInteger(in.get(9));
+		Integer maxIteracji = Integer.parseInt(in.get(9));
 		if(maxIteracji == null)
 			return false;
 		
@@ -72,8 +79,9 @@ public class Kontroler extends Thread {
 		else
 			algorytm = 1;
 		
-		ewolucyjny = new Algorytm("Punkt",mi,lambda,algorytm,maxIteracji,epsilon,wspInterpolacji,zakres,sigmy,new FunkcjaRosenbrocka());
+		//ewolucyjny = new Algorytm("Punkt",mi,lambda,algorytm,maxIteracji,epsilon,wspInterpolacji,zakres,sigmy,new FunkcjaRosenbrocka());
 		this.pracuj = true;
+		konsola.setText(konsola.getText()+"Pomyślnie zainicjowano.\n");
 		return true;
 	}
 	

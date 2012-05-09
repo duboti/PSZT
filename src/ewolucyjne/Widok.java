@@ -13,13 +13,17 @@ public class Widok extends JFrame
 	Kontroler kontroler;
 	JEditorPane konsola;
 	ArrayList<String> parametry;
+	JButton przycisk1;
+	JButton przycisk2;
+	JButton przycisk3;
+	JButton przycisk4;
+	JButton przycisk5;
 	
-	//Widok (Kontroler kontr)
 	Widok ()
 	{
 		super("Algorytm ewolucyjny");
-		//kontroler = kontr;
 		konsola = new JEditorPane();
+		kontroler = new Kontroler(konsola);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		
@@ -30,18 +34,58 @@ public class Widok extends JFrame
 		parametryPanel = new ParametryPanel();
 		add(parametryPanel);
 		
-		JButton przycisk1 = new JButton("Inicjuj");
-		JButton przycisk2 = new JButton("1 krok algorytmu");
-		JButton przycisk3 = new JButton("Znajdź rozwiązanie");
-		JButton przycisk4 = new JButton("Zatrzymaj rozwiązywanie");
-		JButton przycisk5 = new JButton("Wyczyść konsole");
+		przycisk1 = new JButton("Inicjuj");
+		przycisk2 = new JButton("1 krok algorytmu");
+		przycisk3 = new JButton("Znajdź rozwiązanie");
+		przycisk4 = new JButton("Zatrzymaj rozwiązywanie");
+		przycisk5 = new JButton("Wyczyść konsole");
+		
+		przycisk2.setEnabled(false);
+		przycisk3.setEnabled(false);
+		przycisk4.setEnabled(false);
 		
 		przycisk1.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				parametry = parametryPanel.Inicjuj();	
-				konsola.setText(parametry.toString());
+				if (kontroler.inicjowanie(parametry))
+				{
+					przycisk2.setEnabled(true);
+					przycisk3.setEnabled(true);
+				}
+				else
+					konsola.setText(konsola.getText()+"Wysąpił błąd podczas inicjacji.\n");
+			}
+		});
+		
+		przycisk2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				kontroler.krok();			
+			}
+		});
+		
+		przycisk3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				kontroler.start();
+				przycisk2.setEnabled(false);
+				przycisk3.setEnabled(false);
+				przycisk4.setEnabled(true);
+			}
+		});
+		
+		przycisk4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				kontroler.przerwij();
+				przycisk2.setEnabled(true);
+				przycisk3.setEnabled(true);
+				przycisk4.setEnabled(false);
 			}
 		});
 		
@@ -68,6 +112,13 @@ public class Widok extends JFrame
 		setPreferredSize(new Dimension(650, 670));
 		pack();
 		setVisible(true);
+	}
+	
+	void koniecAlgorytmu ()
+	{
+		przycisk2.setEnabled(false);
+		przycisk3.setEnabled(false);
+		przycisk4.setEnabled(false);
 	}
 }
 
