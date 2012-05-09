@@ -2,12 +2,24 @@ package ewolucyjne;
 
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 72bfe9f228e99dfffd67bcec3b09ab2c3eb6c0f4
 public class Kontroler extends Thread {
 
 	private Algorytm ewolucyjny;
 	private boolean pracuj;
 	private Widok widok;
 	
+<<<<<<< HEAD
+=======
+	
+	Kontroler ( Widok widok )
+	{
+		this.widok = widok;
+	}
+>>>>>>> 72bfe9f228e99dfffd67bcec3b09ab2c3eb6c0f4
 	
 	Kontroler ( Widok widok )
 	{
@@ -93,7 +105,7 @@ public class Kontroler extends Thread {
 	 */
 	public void przerwij( )
 	{
-		pracuj = false;
+		this.pracuj = false;
 	}
 	
 	public String statystykiAlgorytmu()
