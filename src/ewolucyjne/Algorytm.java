@@ -48,8 +48,31 @@ public class Algorytm
 	
 	Osobnik stworzPotomka(Osobnik mama, Osobnik tata) 
 	{
+		Osobnik potomek = null;
+		ArrayList<Float> parametry = new ArrayList<Float>();
+		ArrayList<Float> sigmy = new ArrayList<Float>();
 		
-		return null;
+		if (mama.pobierzWartosc() > tata.pobierzWartosc())
+		{
+			for (int i=0 ; i<mama.pobierzIloscParametrow() ; i++)
+			{
+				parametry.add(i, mama.pobierzParametr(i)*wspolczynnikInterpolacji+
+						tata.pobierzParametr(i)*(1-wspolczynnikInterpolacji));
+				sigmy.add(i, mama.pobierzSigme(i)*wspolczynnikInterpolacji+
+						tata.pobierzSigme(i)*(1-wspolczynnikInterpolacji));
+			}
+		}
+		else
+		{
+			for (int i=0 ; i<mama.pobierzIloscParametrow() ; i++)
+			{
+				parametry.add(i, tata.pobierzParametr(i)*wspolczynnikInterpolacji+
+						mama.pobierzParametr(i)*(1-wspolczynnikInterpolacji));
+				sigmy.add(i, tata.pobierzSigme(i)*wspolczynnikInterpolacji+
+						mama.pobierzSigme(i)*(1-wspolczynnikInterpolacji));
+			}
+		}
+		return potomek;
 	}
 	
 	Osobnik stworzOsobnika(String typOsobnika, ArrayList<Zakres> zakresy, ArrayList<Float> sigmy) 
