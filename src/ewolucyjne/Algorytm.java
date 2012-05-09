@@ -8,29 +8,31 @@ public class Algorytm
 	private int lambda;
 	private int rodzajAlgorytmu;
 	private float wspolczynnikInterpolacji;
-//	private ArrayList<Zakres> zakres;
+	private ArrayList<Zakres> zakres;
 //	private ArrayList<Float> sigmy;
 	private int nrIteracji;
 	private float najlepszyWynik;
 	private int etapAlgorytmu;				//w planowo ma to byc enum
 	private int etapBezPoprawy;
 	private int maxIteracji;
-	private int dokladnosc;
-	String typOsobnika = "Punkt";
+	private float dokladnosc;
+	String typOsobnika;
 	private int maxBezPoprawy;
+	FunkcjaPrzystosowania funkcja;
 	
 	public ArrayList<Osobnik> populacja;
 	
 	//private ArrayList<Osobnik> potomkowie;
 	
-	Algorytm (int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, int dokladnosc, float wspolczynnikInterpolacji, 
+	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, float dokladnosc, float wspolczynnikInterpolacji, 
 			ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
 	{
+		this.typOsobnika = typOsobnika;
 		this.mi = mi;
 		this.lambda = lambda;
 		this.rodzajAlgorytmu = rodzajAlgorytmu;
 		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
-//		this.zakres = zakres;
+		this.zakres = zakres;
 //		this.sigmy = sigmy;
 		this.nrIteracji = 0;
 		this.etapAlgorytmu = 0;		
@@ -38,10 +40,15 @@ public class Algorytm
 		this.maxIteracji = maxIteracji;
 		this.maxBezPoprawy = 5;
 		this.dokladnosc = dokladnosc;
+		this.funkcja = funkcja;
 		
+		Random generator = new Random(); 
 		for (int i=0; i<this.mi ; i++)
 		{
-			populacja.add(this.stworzOsobnika(typOsobnika, zakres, sigmy));	
+			ArrayList<Float> parametry = new ArrayList<Float>();
+			for(int j = 0 ; j < this.zakres.size(); j++ )
+				parametry.add( ( (this.zakres.get(j)).koniec() - (this.zakres.get(j)).poczatek() )*generator.nextFloat() + (this.zakres.get(j)).poczatek());
+			populacja.add(this.stworzOsobnika(parametry, sigmy));	
 		}
 		Collections.sort(populacja, new OsobnikComparator());
 		
@@ -74,10 +81,12 @@ public class Algorytm
 						mama.pobierzSigme(i)*(1-wspolczynnikInterpolacji));
 			}
 		}
+		potomek = stworzOsobnika(parametry,sigmy);
+		potomek.mutuj();
 		return potomek;
 	}
 	
-	Osobnik stworzOsobnika(String typOsobnika, ArrayList<Zakres> zakresy, ArrayList<Float> sigmy) 
+	Osobnik stworzOsobnika(ArrayList<Float> parametry, ArrayList<Float> sigmy) 
 	{
 		Osobnik nowyOsobnik = null;
 		@SuppressWarnings("rawtypes")
@@ -94,7 +103,7 @@ public class Algorytm
 		}
 		try 
 		{
-			nowyOsobnik = (Osobnik)cl.newInstance();
+			nowyOsobnik = (Osobnik)cl.newInstance();			
 		} 
 		catch (InstantiationException e) 
 		{
@@ -108,7 +117,7 @@ public class Algorytm
 			e.printStackTrace();
 			return null;
 		}
-		//TODO ustawiæ parametry osobnika takie jak sigmy itp.
+		nowyOsobnik.inicjowanie(parametry, sigmy, funkcja);
 		return nowyOsobnik;
 	}
 	

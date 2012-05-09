@@ -8,14 +8,28 @@ package ewolucyjne;
  *
  */
 public class Zakres {
-	/**
-	 * TODO
-	 * dodaæ metody która zwróci pocz¹tek i koniec zakresu
-	 * @return
-	 */
 	
-	public boolean czyNalezy()
+	private Float begin;
+	private Float end;
+	
+	public Zakres ( Float begin , Float end )
 	{
-		return false;
+		this.begin = begin;
+		this.end = end;
+	}
+	
+	public Float poczatek()
+	{
+		return this.begin;
+	}
+	
+	public Float koniec()
+	{
+		return this.end;
+	}
+	
+	public boolean czyNalezy( Float in )
+	{
+		return (in >= this.begin && in <= this.end);
 	}
 }

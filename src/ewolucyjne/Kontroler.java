@@ -1,6 +1,8 @@
 package ewolucyjne;
 
-public class Kontroler {
+import java.util.ArrayList;
+
+public class Kontroler extends Thread {
 
 	private Algorytm ewolucyjny;
 	private boolean pracuj;
@@ -8,24 +10,83 @@ public class Kontroler {
 	/**
 	 * Metoda tworzy obiekt klasy Algorytm
 	 * @param 
-	 * @return Potwierdzenie utworzenia obiektu. Metoda zwraca false, kiedy ktÛryú z parametrÛw jest niepoprawny.
+	 * @return Potwierdzenie utworzenia obiektu. Metoda zwraca false, kiedy kt√≥ry≈õ z parametr√≥w jest niepoprawny.
 	 */
-	public boolean inicjalizuj(  )
+	public boolean inicjowanie( ArrayList < String > in )
 	{
+		
+		Integer mi = Integer.getInteger(in.get(0));
+		if(mi == null)
+			return false;
+		
+		Integer lambda = Integer.getInteger(in.get(1));
+		if(lambda == null)
+			return false;
+		
+		Float minX = Float.parseFloat(in.get(2));
+		if(minX == null)
+			return false;
+		
+		Float minY = Float.parseFloat(in.get(3));
+		if(minY == null)
+			return false;
+		
+		Float maxX = Float.parseFloat(in.get(4));
+		if(maxX == null)
+			return false;
+		
+		Float maxY = Float.parseFloat(in.get(5));
+		if(maxY == null)
+			return false;
+		
+		ArrayList<Zakres> zakres = new ArrayList<Zakres>();
+		zakres.add(new Zakres (minX,maxX));
+		zakres.add(new Zakres (minY,maxY));		
+		
+		Float sigmaX = Float.parseFloat(in.get(6));
+		if(sigmaX == null)
+			return false;
+		
+		Float sigmaY = Float.parseFloat(in.get(7));
+		if(sigmaY == null)
+			return false;
+		
+		ArrayList<Float> sigmy = new ArrayList<Float>();
+		sigmy.add(sigmaX);
+		sigmy.add(sigmaY);
+		
+		Float epsilon = Float.parseFloat(in.get(8));
+		if(epsilon == null)
+			return false;
+				
+		Integer maxIteracji = Integer.getInteger(in.get(9));
+		if(maxIteracji == null)
+			return false;
+		
+		Float wspInterpolacji = Float.parseFloat(in.get(10));
+		if(wspInterpolacji == null)
+			return false;
+		int algorytm;
+		if(in.get(11).compareTo("Œº + Œª")==0)
+			algorytm = 0;
+		else
+			algorytm = 1;
+		
+		ewolucyjny = new Algorytm("Punkt",mi,lambda,algorytm,maxIteracji,epsilon,wspInterpolacji,zakres,sigmy,new FunkcjaRosenbrocka());
 		this.pracuj = true;
-		return false;
+		return true;
 	}
 	
 	/**
-	 * Metoda zatrzymuje dzia≥anie algorytmu kiedy pracuje w trybie automatycznym.
+	 * Metoda zatrzymuje dzia≈Çanie algorytmu kiedy pracuje w trybie automatycznym.
 	 */
-	public void stop( )
+	public void przerwij( )
 	{
 		pracuj = false;
 	}
 	
 	/**
-	 * Metoda wykonuje jednπ iteracje algorytmu.
+	 * Metoda wykonuje jednƒÖ iteracje algorytmu.
 	 * @return Obiekt po przejsciu iteracji.
 	 */
 	public Algorytm krok( )
@@ -36,15 +97,15 @@ public class Kontroler {
 	
 	/**
 	 * Metoda uruchamia algorytm w trybie automatycznym.
-	 * @return Obiekt po przerwaniu lub zakoÒczeniu dzia≥ania.
+	 * @return Obiekt po przerwaniu lub zako≈Ñczeniu dzia≈Çania.
 	 */
 	
-	public Algorytm automatycznie()
+	public void run()
 	{
 		while(pracuj)
 		{
 			//TODO
 		}
-		return ewolucyjny;
+		return;
 	}
 }

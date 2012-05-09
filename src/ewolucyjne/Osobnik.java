@@ -1,7 +1,11 @@
 package ewolucyjne;
+
+import java.util.ArrayList;
+
 //TODO: sprawdzenie czy mo¿na zwracaæ coœ takiego jak NAN
 public interface Osobnik 
 {
+	void inicjowanie( ArrayList<Float> parametry, ArrayList<Float> sigmy , FunkcjaPrzystosowania fun);
 	/**
 	 * pobierz wartoœæ funkcji przystosowania
 	 * @return
