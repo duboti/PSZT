@@ -19,11 +19,22 @@ public class Widok extends JFrame
 	JButton przycisk4;
 	JButton przycisk5;
 	
+	/*		!!!!!!!!!!!!!!!!!!!!!!!!!!  TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * 		Zamiast przekazywania konsoli stworz metode w widoku ktora dodaje
+	 * 		tekst do konsoli np void dodajNapis( String )
+	 *		
+	 *		Poza blokowaniem przyciskow blokuj takze pola do wpisywania parametrow
+	 *		
+	 * */
+	public void dodajNapis( String napis ){}
+	//----------------------
+	
+	
 	Widok ()
 	{
 		super("Algorytm ewolucyjny");
 		konsola = new JEditorPane();
-		kontroler = new Kontroler(konsola);
+		kontroler = new Kontroler(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		
