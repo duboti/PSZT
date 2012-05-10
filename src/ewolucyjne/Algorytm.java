@@ -38,7 +38,7 @@ public class Algorytm
 		this.etapAlgorytmu = 1;		
 		this.etapBezPoprawy = 0;
 		this.maxIteracji = maxIteracji;
-		this.maxBezPoprawy = 5;
+		this.maxBezPoprawy = 10;
 		this.dokladnosc = dokladnosc;
 		this.funkcja = funkcja;
 		populacja = new ArrayList<Osobnik>();
@@ -161,7 +161,7 @@ public class Algorytm
 	 * w zaleznoœci od rodzaju algorytmu
 	 * @param potomkowie
 	 */
-	void Selekcja(ArrayList<Osobnik> potomkowie) 
+	void selekcja(ArrayList<Osobnik> potomkowie) 
 	{
 		if (stop)
 		{	
@@ -211,12 +211,12 @@ public class Algorytm
 		if ( (najlepszyWynik - populacja.get(0).pobierzWartosc() ) > dokladnosc)
 		{
 			etapBezPoprawy = 0;
-			najlepszyWynik = populacja.get(0).pobierzWartosc();
 		}
 		else
 		{
 			etapBezPoprawy++;
 		}
+		najlepszyWynik = populacja.get(0).pobierzWartosc();
 	}
 	
 	ArrayList<Osobnik> pobierzPopulacje()

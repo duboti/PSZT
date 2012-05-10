@@ -126,6 +126,7 @@ public class Kontroler extends Thread {
 		return napis;
 		//return this.ewolucyjny.toString();
 	}
+	
 	/**
 	 * Metoda wykonuje jedną iteracje algorytmu.
 	 * @return Obiekt po przejsciu iteracji.
@@ -136,16 +137,16 @@ public class Kontroler extends Thread {
 			return;
 		ArrayList<Osobnik> pokolenie = this.ewolucyjny.stworzNastepnePokolenie();
 		this.ewolucyjny.mutujPopulacje(pokolenie);
-		this.ewolucyjny.Selekcja(pokolenie);
+		this.ewolucyjny.selekcja(pokolenie);
 		pracuj = !this.ewolucyjny.warunekStopu();
 		this.widok.dodajNapis(this.statystykiAlgorytmu());
 		return;
 	}
+	
 	/**
 	 * Metoda uruchamia algorytm w trybie automatycznym.
 	 * @return Obiekt po przerwaniu lub zakończeniu działania.
 	 */
-	
 	public void run()
 	{
 		if(this.zakonczony)
@@ -154,7 +155,7 @@ public class Kontroler extends Thread {
 			
 			ArrayList<Osobnik> pokolenie = this.ewolucyjny.stworzNastepnePokolenie();
 			this.ewolucyjny.mutujPopulacje(pokolenie);
-			this.ewolucyjny.Selekcja(pokolenie);
+			this.ewolucyjny.selekcja(pokolenie);
 			this.widok.dodajNapis(statystykiAlgorytmu());
 			
 			while(!this.pracuj)
