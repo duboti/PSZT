@@ -21,7 +21,7 @@ public class Algorytm
 	private int maxBezPoprawy;
 	FunkcjaPrzystosowania funkcja;
 	
-	public ArrayList<Osobnik> populacja;
+	private ArrayList<Osobnik> populacja;
 	
 	
 	
@@ -227,20 +227,20 @@ public class Algorytm
 	{	
 		if (etapAlgorytmu == 2)
 		{
-			double procentMutacji = 0.05;
+			float procentMutacji = 0.05f;
 			Random generator = new Random();
 			if (rodzajAlgorytmu==0)
 			{
 				for (Osobnik os: populacja)
 				{
-					if (generator.nextDouble() < procentMutacji)
+					if (generator.nextFloat() < procentMutacji)
 						populacja.get(populacja.indexOf(os)).mutuj();
 				}
 			} else if(rodzajAlgorytmu==1)
 			{
 				for (Osobnik os: potomkowie)
 				{
-					if (generator.nextDouble() < procentMutacji)
+					if (generator.nextFloat() < procentMutacji)
 						potomkowie.get(potomkowie.indexOf(os)).mutuj();
 				}
 			}
@@ -267,5 +267,8 @@ public class Algorytm
 		return populacja.get(0);
 	}
 	
-	
+	int getEtapAlgorytmu()
+	{
+		return this.etapAlgorytmu;
+	}
 }

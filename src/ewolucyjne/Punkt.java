@@ -83,6 +83,13 @@ public class Punkt implements Osobnik {
 	{
 		return 2;
 	}
-
+	
+	
+	public String toString()
+	{
+		String napis;
+		napis = " f="+warFun+" x="+wspX+" y="+wspY+"\n";
+		return napis;
+	}
 	
 }

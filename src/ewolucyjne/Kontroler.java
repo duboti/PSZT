@@ -121,7 +121,7 @@ public class Kontroler extends Thread {
 		String napis;
 		ArrayList<Osobnik> tmp = this.ewolucyjny.pobierzPopulacje();
 		napis = "Numer iteracji: " + this.ewolucyjny.pobierzNumerIteracji() + "\n";
-		for(int i = 0; i < 10 ; i++)
+		for(int i = 0; i < 5 ; i++)
 			napis+= tmp.get(i).toString();
 		return napis;
 		//return this.ewolucyjny.toString();
