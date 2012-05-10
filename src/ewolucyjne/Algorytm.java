@@ -20,6 +20,7 @@ public class Algorytm
 	String typOsobnika;
 	private int maxBezPoprawy;
 	FunkcjaPrzystosowania funkcja;
+	private boolean stop;
 	
 	private ArrayList<Osobnik> populacja;
 	
@@ -41,6 +42,7 @@ public class Algorytm
 		this.dokladnosc = dokladnosc;
 		this.funkcja = funkcja;
 		populacja = new ArrayList<Osobnik>();
+		this.stop = false;
 		
 		Random generator = new Random(); 
 		for (int i=0; i<this.mi ; i++)
@@ -129,7 +131,11 @@ public class Algorytm
 	 */
 	ArrayList<Osobnik> stworzNastepnePokolenie() 
 	{
-		if (etapAlgorytmu==1)	
+		if (stop)
+		{
+			return null;
+		}
+		else if (etapAlgorytmu==1)	
 		{
 			ArrayList<Osobnik> nowePokolenie = new ArrayList<Osobnik>();
 			Random generator = new Random(); 
@@ -157,7 +163,10 @@ public class Algorytm
 	 */
 	void Selekcja(ArrayList<Osobnik> potomkowie) 
 	{
-		if (etapAlgorytmu==3)
+		if (stop)
+		{	
+		}
+		else if (etapAlgorytmu==3)
 		{
 			if (rodzajAlgorytmu == 0)
 			{
@@ -185,6 +194,8 @@ public class Algorytm
 			
 			
 			sprawdzPoprawe();
+			
+			czyStop();
 			
 			etapAlgorytmu = 1;
 		}	
@@ -225,7 +236,10 @@ public class Algorytm
 	 */
 	void mutujPopulacje(ArrayList<Osobnik> potomkowie)
 	{	
-		if (etapAlgorytmu == 2)
+		if (stop)
+		{
+		}
+		else if (etapAlgorytmu == 2)
 		{
 			float procentMutacji = 0.05f;
 			Random generator = new Random();
@@ -255,8 +269,15 @@ public class Algorytm
 	 */
 	boolean warunekStopu() 
 	{
-		return (nrIteracji>=maxIteracji || etapBezPoprawy>=maxBezPoprawy);
+		return this.stop;
 	}
+	
+	
+	void czyStop() 
+	{
+		stop = (nrIteracji>=maxIteracji || etapBezPoprawy>=maxBezPoprawy);
+	}
+	
 	
 	/**
 	 * Zwraca osobnika posiadaj¹cego najlepsz¹ wartoœc funkcji przystosowania z populacji
