@@ -21,6 +21,7 @@ public class Algorytm
 	private int maxBezPoprawy;
 	FunkcjaPrzystosowania funkcja;
 	private boolean stop;
+	float procentMutacji;
 	
 	private ArrayList<Osobnik> populacja;
 	
@@ -43,6 +44,7 @@ public class Algorytm
 		this.funkcja = funkcja;
 		populacja = new ArrayList<Osobnik>();
 		this.stop = false;
+		this.procentMutacji = 0.05f;
 		
 		Random generator = new Random(); 
 		for (int i=0; i<this.mi ; i++)
@@ -230,8 +232,8 @@ public class Algorytm
 	}
 	
 	/**
-	 * Dla algorytmu u+L : Losowanie do 5% osobnikow z populacji i wywolywanie metody mutuj
-	 * Dla algorytmu u,L : Losowanie do 5% osobnikow z ArrayList<Osobnik> potomkowie i wywolywanie metody mutuj
+	 * Dla algorytmu u+L : Losowanie osobnikow z populacji i wywolywanie metody mutuj
+	 * Dla algorytmu u,L : Losowanie osobnikow z ArrayList<Osobnik> potomkowie i wywolywanie metody mutuj
 	 * @param potomkowie
 	 */
 	void mutujPopulacje(ArrayList<Osobnik> potomkowie)
@@ -241,7 +243,6 @@ public class Algorytm
 		}
 		else if (etapAlgorytmu == 2)
 		{
-			float procentMutacji = 0.05f;
 			Random generator = new Random();
 			if (rodzajAlgorytmu==0)
 			{
