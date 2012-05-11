@@ -115,16 +115,19 @@ public class Kontroler extends Thread {
 			this.pracuj = true;
 	}
 	
-	//TODO Ta metoda generuje bardzo brzydkie statystyki. Prezentowane dane powinny być dla użytkownika czytelne!
 	public String statystykiAlgorytmu()
 	{
 		String napis;
 		ArrayList<Osobnik> tmp = this.ewolucyjny.pobierzPopulacje();
 		napis = "Numer iteracji: " + this.ewolucyjny.pobierzNumerIteracji() + "\n";
-		for(int i = 0; i < 5 ; i++)
+		int iloscWyswietlnych;
+		if (tmp.size() > 14)
+			iloscWyswietlnych = 14;
+		else
+			iloscWyswietlnych = tmp.size();
+		for(int i = 0; i < iloscWyswietlnych ; i++)
 			napis+= tmp.get(i).toString();
 		return napis;
-		//return this.ewolucyjny.toString();
 	}
 	
 	/**
