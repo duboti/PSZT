@@ -109,7 +109,9 @@ public class Kontroler extends Thread {
 	
 	public void uruchom( )
 	{
-		if(!this.pracuj)
+		if(this.zakonczony)
+			return;
+		if(this.pracuj)
 			this.start();
 		else
 			this.pracuj = true;
@@ -141,7 +143,7 @@ public class Kontroler extends Thread {
 		ArrayList<Osobnik> pokolenie = this.ewolucyjny.stworzNastepnePokolenie();
 		this.ewolucyjny.mutujPopulacje(pokolenie);
 		this.ewolucyjny.selekcja(pokolenie);
-		pracuj = !this.ewolucyjny.warunekStopu();
+		zakonczony = this.ewolucyjny.warunekStopu();
 		this.widok.dodajNapis(this.statystykiAlgorytmu());
 		return;
 	}
@@ -159,9 +161,10 @@ public class Kontroler extends Thread {
 			ArrayList<Osobnik> pokolenie = this.ewolucyjny.stworzNastepnePokolenie();
 			this.ewolucyjny.mutujPopulacje(pokolenie);
 			this.ewolucyjny.selekcja(pokolenie);
+			this.zakonczony=this.ewolucyjny.warunekStopu();
 			this.widok.dodajNapis(statystykiAlgorytmu());
 			
-			while(!this.pracuj)
+			while(!this.pracuj && !this.zakonczony)
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
@@ -170,7 +173,7 @@ public class Kontroler extends Thread {
 				}
 				
 				
-		}while(!this.ewolucyjny.warunekStopu() && this.zakonczony);
+		}while(!this.zakonczony);
 		
 		return;
 	}
