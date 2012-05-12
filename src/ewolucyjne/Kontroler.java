@@ -139,13 +139,19 @@ public class Kontroler extends Thread {
 	public void krok( )
 	{
 		if(this.zakonczony)
-			return;
-		ArrayList<Osobnik> pokolenie = this.ewolucyjny.stworzNastepnePokolenie();
-		this.ewolucyjny.mutujPopulacje(pokolenie);
-		this.ewolucyjny.selekcja(pokolenie);
-		zakonczony = this.ewolucyjny.warunekStopu();
-		this.widok.dodajNapis(this.statystykiAlgorytmu());
-		return;
+		{
+			widok.koniecAlgorytmu();
+			widok.dodajNapis("Algorytm zakończył się poprawnie.\nZnalezione minimum to:\n"
+					+ewolucyjny.pobierzPopulacje().get(0).toString());
+		}
+		else
+		{
+			ArrayList<Osobnik> pokolenie = this.ewolucyjny.stworzNastepnePokolenie();
+			this.ewolucyjny.mutujPopulacje(pokolenie);
+			this.ewolucyjny.selekcja(pokolenie);
+			zakonczony = this.ewolucyjny.warunekStopu();
+			this.widok.dodajNapis(this.statystykiAlgorytmu());
+		}
 	}
 	
 	/**
@@ -174,7 +180,9 @@ public class Kontroler extends Thread {
 				
 				
 		}while(!this.zakonczony);
-		
+		widok.koniecAlgorytmu();
+		widok.dodajNapis("Algorytm zakończył się poprawnie.\nZnalezione minimum to:\n"
+				+ewolucyjny.pobierzPopulacje().get(0).toString());
 		return;
 	}
 }

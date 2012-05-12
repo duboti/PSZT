@@ -145,7 +145,7 @@ public class Widok extends JFrame
 		przycisk2.setEnabled(false);
 		przycisk3.setEnabled(false);
 		przycisk4.setEnabled(false);
-		przycisk5.setEnabled(false);
+		przycisk5.setEnabled(true);
 	}
 	
 	public void dodajNapis (String napis)
