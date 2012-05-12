@@ -8,6 +8,7 @@ public class Algorytm
 	private int lambda;
 	private int rodzajAlgorytmu;	//0-mi+lambda, 1-mi,lambda
 	private int rodzajWyboru;		//0-mi najlepszych, 1-mi losowych
+	private int rodzajOptymalizacji;	//0-minimalizacja, 1-maxymalizacja
 	private float wspolczynnikInterpolacji;
 	private int nrIteracji;
 	private float najlepszyWynik;
@@ -36,6 +37,7 @@ public class Algorytm
 		this.lambda = lambda;
 		this.rodzajAlgorytmu = rodzajAlgorytmu;
 		this.rodzajWyboru = rodzajWyboru;
+		this.rodzajOptymalizacji = 0;
 		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
 		this.nrIteracji = 0;
 		this.etapAlgorytmu = 1;		
@@ -57,7 +59,7 @@ public class Algorytm
 											generator.nextFloat() + (zakres.get(j)).poczatek());
 			populacja.add(this.stworzOsobnika(parametry, sigmy));	
 		}
-		Collections.sort(populacja, new OsobnikComparator());
+		Collections.sort(populacja, new OsobnikMinComparator());
 		
 		najlepszyWynik = populacja.get(0).pobierzWartosc();
 	}
@@ -175,21 +177,34 @@ public class Algorytm
 			if (rodzajAlgorytmu == 0)
 			{
 				populacja.addAll(potomkowie);
-				wybierzosobnikiNowejPopulacji();
-				Collections.sort(populacja, new OsobnikComparator());
+				wybierzOsobnikiNowejPopulacji();
+				if (rodzajOptymalizacji==0)
+				{
+					Collections.sort(populacja, new OsobnikMinComparator());
+				}
+				else if (rodzajOptymalizacji==1)
+				{
+					Collections.sort(populacja, new OsobnikMaxComparator());
+				}
 			}
 			else if (rodzajAlgorytmu == 1)
 			{
 				populacja.clear();
 				populacja.addAll(potomkowie);
-				wybierzosobnikiNowejPopulacji();
-				Collections.sort(populacja, new OsobnikComparator());
+				wybierzOsobnikiNowejPopulacji();
+				if (rodzajOptymalizacji==0)
+				{
+					Collections.sort(populacja, new OsobnikMinComparator());
+				}
+				else if (rodzajOptymalizacji==1)
+				{
+					Collections.sort(populacja, new OsobnikMaxComparator());
+				}
 			}
 			else
 				return;
 			
 			nrIteracji++;
-			
 			
 			sprawdzPoprawe();
 			
@@ -206,11 +221,18 @@ public class Algorytm
 	 * gdy rodzaj wyboru == 1 jest to mi losowych
 	 * w pozosta³ych przypadkach populacja jest po prostu ucinana do mi osobników
 	 */
-	private void wybierzosobnikiNowejPopulacji() 
+	private void wybierzOsobnikiNowejPopulacji() 
 	{
 		if (rodzajWyboru==0)
 		{
-			Collections.sort(populacja, new OsobnikComparator());
+			if (rodzajOptymalizacji==0)
+			{
+				Collections.sort(populacja, new OsobnikMinComparator());
+			}
+			else if (rodzajOptymalizacji==1)
+			{
+				Collections.sort(populacja, new OsobnikMaxComparator());
+			}
 		}
 		else if (rodzajWyboru==1)
 		{
@@ -228,13 +250,27 @@ public class Algorytm
 	 */
 	private void sprawdzPoprawe() 
 	{
-		if ( (najlepszyWynik - populacja.get(0).pobierzWartosc() ) > dokladnosc)
+		if (rodzajOptymalizacji==0)
 		{
-			etapBezPoprawy = 0;
+			if ( (najlepszyWynik - populacja.get(0).pobierzWartosc() ) > dokladnosc)
+			{
+				etapBezPoprawy = 0;
+			}
+			else
+			{
+				etapBezPoprawy++;
+			}
 		}
-		else
+		else if (rodzajOptymalizacji==1)
 		{
-			etapBezPoprawy++;
+			if ( (najlepszyWynik - populacja.get(0).pobierzWartosc() ) < dokladnosc)
+			{
+				etapBezPoprawy = 0;
+			}
+			else
+			{
+				etapBezPoprawy++;
+			}
 		}
 		najlepszyWynik = populacja.get(0).pobierzWartosc();
 	}
