@@ -22,28 +22,44 @@ public class Kontroler extends Thread {
 
 	public boolean inicjowanie( ArrayList < String > in )
 	{
-		
-		Integer mi = Integer.parseInt(in.get(0));
+		Integer mi, lambda, maxIteracji;
+		Float minX, minY, maxX, maxY, sigmaX, sigmaY, epsilon, wspInterpolacji;
+		try
+		{
+			mi = Integer.parseInt(in.get(0));
+			lambda = Integer.parseInt(in.get(1));
+			minX = Float.parseFloat(in.get(2));
+			minY = Float.parseFloat(in.get(3));
+			maxX = Float.parseFloat(in.get(4));
+			maxY = Float.parseFloat(in.get(5));
+			sigmaX = Float.parseFloat(in.get(6));
+			sigmaY = Float.parseFloat(in.get(7));
+			epsilon = Float.parseFloat(in.get(8));
+			maxIteracji = Integer.parseInt(in.get(9));
+			wspInterpolacji = Float.parseFloat(in.get(10));
+		}
+		catch (NumberFormatException e)
+		{
+			//e.printStackTrace();
+			widok.dodajNapis("Błąd: Co najmniej 1 z pól nie zawiera odpowiedniej liczby. Kod błędu:");
+			widok.dodajNapis(e.getMessage());
+			return false;
+		}
 		if(mi == null || mi <= 0)
 			return false;
 	
-		Integer lambda = Integer.parseInt(in.get(1));
 		if(lambda == null || lambda<=mi)
 			return false;
 		
-		Float minX = Float.parseFloat(in.get(2));
 		if(minX == null)
 			return false;
 		
-		Float minY = Float.parseFloat(in.get(3));
 		if(minY == null)
 			return false;
 		
-		Float maxX = Float.parseFloat(in.get(4));
 		if(maxX == null || maxX < minX)
 			return false;
 		
-		Float maxY = Float.parseFloat(in.get(5));
 		if(maxY == null || maxY < minY)
 			return false;
 
@@ -51,33 +67,25 @@ public class Kontroler extends Thread {
 		zakres.add(new Zakres (minX,maxX));
 		zakres.add(new Zakres (minY,maxY));		
 		
-		Float sigmaX = Float.parseFloat(in.get(6));
 		if(sigmaX == null || sigmaX > 1 || sigmaX < 0 )
 			return false;
 		
-		Float sigmaY = Float.parseFloat(in.get(7));
 		if(sigmaY == null || sigmaY > 1 || sigmaY < 0)
 			return false;
 		
 		ArrayList<Float> sigmy = new ArrayList<Float>();
 		sigmy.add(sigmaX);
 		sigmy.add(sigmaY);
-		
-		Float epsilon = Float.parseFloat(in.get(8));
 
 		if(epsilon == null || epsilon < 0)
 			return false;
-				
-
-		Integer maxIteracji = Integer.parseInt(in.get(9));
 
 		if(maxIteracji == null || maxIteracji <=0 )
 			return false;
-		
-		Float wspInterpolacji = Float.parseFloat(in.get(10));
 
 		if(wspInterpolacji == null || wspInterpolacji >= 1 || wspInterpolacji <= 0)
 			return false;
+		
 		int algorytm;
 		if(in.get(11).compareTo("μ + λ")==0)
 			algorytm = 0;

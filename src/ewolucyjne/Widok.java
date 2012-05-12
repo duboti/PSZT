@@ -64,7 +64,7 @@ public class Widok extends JFrame
 					parametryPanel.zablokujParametry();
 				}
 				else
-					konsola.setText(konsola.getText()+"Wysąpił błąd podczas inicjacji.\n");
+					konsola.setText(konsola.getText()+"Wystąpił błąd podczas inicjacji.\n");
 			}
 		});
 		
@@ -97,7 +97,6 @@ public class Widok extends JFrame
 				przycisk3.setEnabled(true);
 				przycisk4.setEnabled(false);
 				przycisk5.setEnabled(true);
-				kontroler = null;
 			}
 		});
 		
@@ -111,6 +110,7 @@ public class Widok extends JFrame
 				przycisk4.setEnabled(false);
 				przycisk5.setEnabled(false);
 				parametryPanel.odblokujParametry();
+				kontroler = null;
 			}
 		});
 		
