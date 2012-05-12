@@ -91,7 +91,7 @@ public class Kontroler extends Thread {
 			algorytm = 0;
 		else
 			algorytm = 1;
-		this.ewolucyjny = new Algorytm("ewolucyjne.Punkt",mi,lambda,algorytm,maxIteracji,epsilon,wspInterpolacji,zakres,sigmy,new FunkcjaRosenbrocka());
+		this.ewolucyjny = new Algorytm("ewolucyjne.Punkt",mi,lambda,algorytm,0,maxIteracji,epsilon,wspInterpolacji,zakres,sigmy,new FunkcjaRosenbrocka());
 		this.pracuj = true;
 		this.zakonczony = false;
 		this.widok.dodajNapis(this.statystykiAlgorytmu());

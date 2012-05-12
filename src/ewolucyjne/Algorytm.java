@@ -7,6 +7,7 @@ public class Algorytm
 	private int mi;
 	private int lambda;
 	private int rodzajAlgorytmu;	//0-mi+lambda, 1-mi,lambda
+	private int rodzajWyboru;		//0-mi najlepszych, 1-mi losowych
 	private float wspolczynnikInterpolacji;
 	private int nrIteracji;
 	private float najlepszyWynik;
@@ -27,13 +28,14 @@ public class Algorytm
 	
 	
 	
-	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int maxIteracji, float dokladnosc,
+	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int rodzajWyboru, int maxIteracji, float dokladnosc,
 			float wspolczynnikInterpolacji, ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
 	{
 		this.typOsobnika = typOsobnika;
 		this.mi = mi;
 		this.lambda = lambda;
 		this.rodzajAlgorytmu = rodzajAlgorytmu;
+		this.rodzajWyboru = rodzajWyboru;
 		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
 		this.nrIteracji = 0;
 		this.etapAlgorytmu = 1;		
@@ -173,21 +175,15 @@ public class Algorytm
 			if (rodzajAlgorytmu == 0)
 			{
 				populacja.addAll(potomkowie);
+				wybierzosobnikiNowejPopulacji();
 				Collections.sort(populacja, new OsobnikComparator());
-				for (int i=populacja.size()-1 ; i>=mi ; i-- )
-				{
-					populacja.remove(i);
-				}
 			}
 			else if (rodzajAlgorytmu == 1)
 			{
 				populacja.clear();
 				populacja.addAll(potomkowie);
+				wybierzosobnikiNowejPopulacji();
 				Collections.sort(populacja, new OsobnikComparator());
-				for (int i=populacja.size()-1 ; i>=mi ; i-- )
-				{
-					populacja.remove(i);
-				}
 			}
 			else
 				return;
@@ -202,6 +198,28 @@ public class Algorytm
 			etapAlgorytmu = 1;
 		}	
 		
+	}
+
+	/**
+	 * Wybiera now¹ populacje posiadaj¹c¹ mi osobników
+	 * gdy rodzajWyboru == 0 jest to mi najlepszych
+	 * gdy rodzaj wyboru == 1 jest to mi losowych
+	 * w pozosta³ych przypadkach populacja jest po prostu ucinana do mi osobników
+	 */
+	private void wybierzosobnikiNowejPopulacji() 
+	{
+		if (rodzajWyboru==0)
+		{
+			Collections.sort(populacja, new OsobnikComparator());
+		}
+		else if (rodzajWyboru==1)
+		{
+			Collections.shuffle(populacja);
+		}
+		for (int i=populacja.size()-1 ; i>=mi ; i-- )
+			{
+				populacja.remove(i);
+			}
 	}
 	
 	/**
