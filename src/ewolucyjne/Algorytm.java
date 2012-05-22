@@ -8,7 +8,8 @@ public class Algorytm
 	private int lambda;
 	private int rodzajAlgorytmu;	//0-mi+lambda, 1-mi,lambda
 	private int rodzajWyboru;		//0-mi najlepszych, 1-mi losowych
-	private int rodzajOptymalizacji;	//0-minimalizacja, 1-maxymalizacja
+	private int rodzajOptymalizacji;	//0-minimalizacja, 1-maxymalizacja, 2-konkretna wartoœæ
+	private float celOptymalizacji;
 	private float wspolczynnikInterpolacji;
 	private int nrIteracji;
 	private float najlepszyWynik;
@@ -29,7 +30,8 @@ public class Algorytm
 	
 	
 	
-	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int rodzajWyboru, int maxIteracji, float dokladnosc,
+	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int rodzajWyboru, int rodzajOptymalizacji, 
+			float celOptymalizacji, int maxIteracji, int maxBezPoprawy, float dokladnosc, float procentMutacji,
 			float wspolczynnikInterpolacji, ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
 	{
 		this.typOsobnika = typOsobnika;
@@ -37,18 +39,21 @@ public class Algorytm
 		this.lambda = lambda;
 		this.rodzajAlgorytmu = rodzajAlgorytmu;
 		this.rodzajWyboru = rodzajWyboru;
-		this.rodzajOptymalizacji = 0;
+		this.rodzajOptymalizacji = rodzajOptymalizacji;
+		this.celOptymalizacji = celOptymalizacji;
 		this.wspolczynnikInterpolacji = wspolczynnikInterpolacji;
+		this.maxIteracji = maxIteracji;
+		this.maxBezPoprawy = maxBezPoprawy;
+		this.dokladnosc = dokladnosc;
+		this.funkcja = funkcja;
+		this.procentMutacji = procentMutacji;
+		
 		this.nrIteracji = 0;
 		this.etapAlgorytmu = 1;		
 		this.etapBezPoprawy = 0;
-		this.maxIteracji = maxIteracji;
-		this.maxBezPoprawy = 10;
-		this.dokladnosc = dokladnosc;
-		this.funkcja = funkcja;
 		populacja = new ArrayList<Osobnik>();
 		this.stop = false;
-		this.procentMutacji = 0.05f;
+		
 		
 		Random generator = new Random(); 
 		for (int i=0; i<this.mi ; i++)
@@ -133,7 +138,7 @@ public class Algorytm
 	/**
 	 * metoda zwraca nowo stworzone pokolenie gdy algorytm by³ w etapie 1 i pzrechodzi w etap 2
 	 * w przeciwnym przypadku zwraca nulla
-	 * @return
+	 * @return ArrayList<Osobnik>
 	 */
 	ArrayList<Osobnik> stworzNastepnePokolenie() 
 	{
@@ -233,6 +238,10 @@ public class Algorytm
 			{
 				Collections.sort(populacja, new OsobnikMaxComparator());
 			}
+			else if (rodzajOptymalizacji==2)
+			{
+				Collections.sort(populacja, new OsobnikOdCeluComparator(this.celOptymalizacji));
+			}
 		}
 		else if (rodzajWyboru==1)
 		{
@@ -270,6 +279,16 @@ public class Algorytm
 			else
 			{
 				etapBezPoprawy++;
+			}
+		}else if (rodzajOptymalizacji==2)
+		{
+			if ( Math.abs(celOptymalizacji - populacja.get(0).pobierzWartosc() ) < dokladnosc)
+			{
+				etapBezPoprawy = maxBezPoprawy;
+			} 
+			else
+			{
+				etapBezPoprawy = 0;
 			}
 		}
 		najlepszyWynik = populacja.get(0).pobierzWartosc();
@@ -347,4 +366,9 @@ public class Algorytm
 	{
 		return this.etapAlgorytmu;
 	}
+	
+	public float getCelOptymalizacji() {
+		return celOptymalizacji;
+	}
+
 }
