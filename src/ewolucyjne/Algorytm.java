@@ -6,17 +6,32 @@ public class Algorytm
 {
 	private int mi;
 	private int lambda;
-	private int rodzajAlgorytmu;	//0-mi+lambda, 1-mi,lambda
-	private int rodzajWyboru;		//0-mi najlepszych, 1-mi losowych
-	private int rodzajOptymalizacji;	//0-minimalizacja, 1-maxymalizacja, 2-konkretna wartoœæ
+	/**
+	 * 0-mi+lambda, 
+	 * 1-mi,lambda
+	 */
+	private int rodzajAlgorytmu;
+	/**
+	 * 0-mi najlepszych 
+	 * 1-mi losowych
+	 */
+	private int rodzajWyboru;
+	/**
+	 * 0-minimalizacja, 
+	 * 1-maxymalizacja, 
+	 * 2-konkretna wartoœæ
+	 */
+	private int rodzajOptymalizacji;	
 	private float celOptymalizacji;
 	private float wspolczynnikInterpolacji;
 	private int nrIteracji;
 	private float najlepszyWynik;
-	// etapy algorytmu 1 - czeka na stworzenie nowego pokolenia
-	// etapy algorytmu 2 - czeka na mutacje populacji
-	// etapy algorytmu 3 - czeka na selekcje nastêpnej populacji
-	private int etapAlgorytmu;				//powinien byc enum
+	/**
+	 *  etapy algorytmu 1 - czeka na stworzenie nowego pokolenia
+	 *  etapy algorytmu 2 - czeka na mutacje populacji
+	 *  etapy algorytmu 3 - czeka na selekcje nastêpnej populacji
+	 */
+	private int etapAlgorytmu;
 	private int etapBezPoprawy;
 	private int maxIteracji;
 	private float dokladnosc;
@@ -69,13 +84,33 @@ public class Algorytm
 		najlepszyWynik = populacja.get(0).pobierzWartosc();
 	}
 	
+	/**
+	 * Tworzy potomka na podstawie dwóch osobników
+	 * TODO: sprawdziæ czy uzywa odpowiedniego comparatora w zaleznoœci od rodzajuOptymalizacji
+	 * @param mama
+	 * @param tata
+	 * @return Osobnik
+	 */
 	Osobnik stworzPotomka(Osobnik mama, Osobnik tata) 
 	{
 		Osobnik potomek = null;
 		ArrayList<Float> parametry = new ArrayList<Float>();
 		ArrayList<Float> sigmy = new ArrayList<Float>();
+		Comparator<Osobnik> komparator=null;
+		if (rodzajOptymalizacji==0)
+		{
+			komparator = new OsobnikMinComparator();
+		}
+		else if (rodzajOptymalizacji==1)
+		{
+			komparator = new OsobnikMaxComparator();
+		} 
+		else if (rodzajOptymalizacji==2)
+		{
+			komparator = new OsobnikOdCeluComparator(this.celOptymalizacji);
+		}
 		
-		if (mama.pobierzWartosc() > tata.pobierzWartosc())
+		if (komparator.compare(mama,tata)>1)
 		{
 			for (int i=0 ; i<mama.pobierzIloscParametrow() ; i++)
 			{
@@ -95,11 +130,18 @@ public class Algorytm
 						mama.pobierzSigme(i)*(1-wspolczynnikInterpolacji));
 			}
 		}
+		
 		potomek = stworzOsobnika(parametry,sigmy);
 		potomek.mutuj();
 		return potomek;
 	}
 	
+	/**
+	 * Tworzy osobnika którego argumenty bêdza w pzredzia³ach parametrów oraz bêdzie posiada³ dane sigmy
+	 * @param parametry
+	 * @param sigmy
+	 * @return Osobnik
+	 */
 	Osobnik stworzOsobnika(ArrayList<Float> parametry, ArrayList<Float> sigmy) 
 	{
 		Osobnik nowyOsobnik = null;
@@ -191,6 +233,10 @@ public class Algorytm
 				{
 					Collections.sort(populacja, new OsobnikMaxComparator());
 				}
+				else if (rodzajOptymalizacji==2)
+				{
+					Collections.sort(populacja, new OsobnikOdCeluComparator(this.celOptymalizacji));
+				}
 			}
 			else if (rodzajAlgorytmu == 1)
 			{
@@ -204,6 +250,10 @@ public class Algorytm
 				else if (rodzajOptymalizacji==1)
 				{
 					Collections.sort(populacja, new OsobnikMaxComparator());
+				}
+				else if (rodzajOptymalizacji==2)
+				{
+					Collections.sort(populacja, new OsobnikOdCeluComparator(this.celOptymalizacji));
 				}
 			}
 			else
@@ -254,8 +304,9 @@ public class Algorytm
 	}
 	
 	/**
-	 * W tym miejscu jest warunek który okresla minimalizacje badz maksymalizacje
-	 * obecnie minimalizacja
+	 * W tym miejscu jest warunek który okresla minimalizacje, maksymalizacje lub d¹¿enie do wybranej wartoœci
+	 * W przypadku braku poprawy zwiêkszana jest znienna etapBezPoprawy
+	 * W pzreciwnym przypadku ta zmienna jest zerowana
 	 */
 	private void sprawdzPoprawe() 
 	{
@@ -294,16 +345,6 @@ public class Algorytm
 		najlepszyWynik = populacja.get(0).pobierzWartosc();
 	}
 	
-	ArrayList<Osobnik> pobierzPopulacje()
-	{
-		return this.populacja;
-	}
-	
-	int pobierzNumerIteracji()
-	{
-		return this.nrIteracji;
-	}
-	
 	/**
 	 * Dla algorytmu u+L : Losowanie osobnikow z populacji i wywolywanie metody mutuj
 	 * Dla algorytmu u,L : Losowanie osobnikow z ArrayList<Osobnik> potomkowie i wywolywanie metody mutuj
@@ -339,14 +380,17 @@ public class Algorytm
 	/**
 	 * Zwraca prawdê gdy zosta³ spe³niony i algorytm powinien byc zatrzymany
 	 * w przeciwnym przypadku fa³sz
-	 * @return 
+	 * @return boolean
 	 */
 	boolean warunekStopu() 
 	{
 		return this.stop;
 	}
 	
-	
+	/**
+	 * Sprawdza czy zosta³ spelniony warunek stopu
+	 * oraz ustawia wartoœc zmiennej stop
+	 */
 	void czyStop() 
 	{
 		stop = (nrIteracji>=maxIteracji || etapBezPoprawy>=maxBezPoprawy);
@@ -355,7 +399,7 @@ public class Algorytm
 	
 	/**
 	 * Zwraca osobnika posiadaj¹cego najlepsz¹ wartoœc funkcji przystosowania z populacji
-	 * @return
+	 * @return Osobnik
 	 */
 	Osobnik wybierzNajlepszego() 
 	{
@@ -371,4 +415,13 @@ public class Algorytm
 		return celOptymalizacji;
 	}
 
+	ArrayList<Osobnik> pobierzPopulacje()
+	{
+		return this.populacja;
+	}
+	
+	int pobierzNumerIteracji()
+	{
+		return this.nrIteracji;
+	}
 }
