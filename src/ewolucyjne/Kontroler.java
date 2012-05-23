@@ -93,10 +93,12 @@ public class Kontroler extends Thread {
 			algorytm = 1;
 		int rodzajWyboru=0;
 		int rodzajOptymalizacji=2;
-		float celOptymalizacji=0;
+		float celOptymalizacji=10000;
 		int maxBezPoprawy=10;
 		float procentMutacji=0.05f;
-		this.ewolucyjny = new Algorytm("ewolucyjne.Punkt",mi,lambda,algorytm,rodzajWyboru,rodzajOptymalizacji,celOptymalizacji,maxIteracji,maxBezPoprawy,epsilon,procentMutacji, wspInterpolacji, zakres,sigmy,new FunkcjaRosenbrocka());
+		this.ewolucyjny = new Algorytm("ewolucyjne.Punkt",mi,lambda,algorytm,rodzajWyboru,rodzajOptymalizacji,
+				celOptymalizacji,maxIteracji,maxBezPoprawy,epsilon,procentMutacji, wspInterpolacji,
+				zakres,sigmy,new FunkcjaRosenbrocka());
 		this.pracuj = true;
 		this.zakonczony = false;
 		this.widok.dodajNapis(this.statystykiAlgorytmu());

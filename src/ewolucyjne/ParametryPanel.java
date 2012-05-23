@@ -21,11 +21,17 @@ class ParametryPanel extends JPanel
 	private JTextField maxIteracji2;
 	private JTextField wspolczynnikInterpolacji2;
 	private JComboBox rodzajAlgorytmu2;
+	private JComboBox rodzajWyboru2;
+	private JComboBox rodzajOptymalizacji2;
+	private JTextField celOptymalizacji2;
+	private JTextField procentMutacji2;
+	private JTextField maxBezpoprawy2;
+	private JTextField ileWyswietlanych2;
 	
 	public ParametryPanel() 
 	{
 		double size[][] =
-	        {{0.25, 0.25, 0.25, 0.25},
+	        {{0.20, 0.10, 0.20, 0.10, 0.20, 0.20},
 	         {30, 30, 30, 30, 30, 30}};
 		TableLayout lay = new TableLayout(size);
 	    setLayout(lay);
@@ -40,8 +46,14 @@ class ParametryPanel extends JPanel
 		JLabel sigmaY1 = new JLabel("σ y: ");
 		JLabel epsilon1 = new JLabel("ε: ");
 		JLabel maxIteracji1 = new JLabel("max iteracji: ");
-		JLabel wspolczynnikInterpolacji1 = new JLabel("współczynnik interpolacji: ");
+		JLabel wspolczynnikInterpolacji1 = new JLabel("wsp.interpolacji: ");
 		JLabel rodzajAlgorytmu1 = new JLabel("rodzaj algorytmu: ");
+		JLabel rodzajWyboru1 = new JLabel("rodzaj wyboru: ");
+		JLabel rodzajOptymalizacji1 = new JLabel("rodzaj optymalizacji: ");
+		JLabel celOptymalizacji1 = new JLabel("cel optymalizacji: ");
+		JLabel procentMutacji1 = new JLabel("procent mutacji: ");
+		JLabel maxBezpoprawy1 = new JLabel("max bez poprawy: ");
+		JLabel ileWyswietlanych1 = new JLabel("ile wyswietlanych: ");
 		
 		mi2 = new JTextField("100", 5);
 		lambda2 = new JTextField("200", 5);
@@ -55,6 +67,13 @@ class ParametryPanel extends JPanel
 		maxIteracji2 = new JTextField("10000", 5);
 		wspolczynnikInterpolacji2 = new JTextField("0.5", 5);
 		rodzajAlgorytmu2 = new JComboBox(new String[] {"μ + λ","μ, λ"});
+		
+		rodzajWyboru2 = new JComboBox(new String[] {"μ najlepszych","μ losowych"});
+		rodzajOptymalizacji2 = new JComboBox(new String[] {"minimalizacja","maksymalizacja","do wartości"});
+		celOptymalizacji2 = new JTextField("0", 5);
+		procentMutacji2 = new JTextField("0.05", 5);
+		maxBezpoprawy2 = new JTextField("10", 5);
+		ileWyswietlanych2 = new JTextField("3", 5);
 		
 		add(mi1, "0 0 r c");
 		add(mi2, "1 0 c c");
@@ -73,13 +92,25 @@ class ParametryPanel extends JPanel
 		add(sigmaY1, "2 3 r c");
 		add(sigmaY2, "3 3 c c");
 		add(epsilon1, "0 4 r c");
-		add(epsilon2, "1 4 c c");
+		add(epsilon2, "1 4 l c");
 		add(maxIteracji1, "2 4 r c");
-		add(maxIteracji2, "3 4 c c");
+		add(maxIteracji2, "3 4 l c");
 		add(wspolczynnikInterpolacji1, "0 5 r c");
-		add(wspolczynnikInterpolacji2, "1 5 c c");
+		add(wspolczynnikInterpolacji2, "1 5 l c");
 		add(rodzajAlgorytmu1, "2 5 r c");
-		add(rodzajAlgorytmu2, "3 5 c c");
+		add(rodzajAlgorytmu2, "3 5 l c");
+		add(rodzajWyboru1, "4 0 r c");
+		add(rodzajWyboru2, "5 0 l c");
+		add(rodzajOptymalizacji1, "4 1 r c");
+		add(rodzajOptymalizacji2, "5 1 l c");
+		add(celOptymalizacji1, "4 2 r c");
+		add(celOptymalizacji2, "5 2 l c");
+		add(procentMutacji1, "4 3 r c");
+		add(procentMutacji2, "5 3 l c");
+		add(maxBezpoprawy1, "4 4 r c");
+		add(maxBezpoprawy2, "5 4 l c");
+		add(ileWyswietlanych1, "4 5 r c");
+		add(ileWyswietlanych2, "5 5 l c");
 	}
 	
 	ArrayList<String> Inicjuj ()
