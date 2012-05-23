@@ -150,7 +150,7 @@ public class Widok extends JFrame
 	
 	public void dodajNapis (String napis)
 	{
-		konsola.setText(konsola.getText()+napis+"\n");
+		konsola.setText(napis+konsola.getText()+"\n");
 	}
 }
 

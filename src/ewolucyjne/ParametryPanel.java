@@ -128,6 +128,13 @@ class ParametryPanel extends JPanel
 		parametry.add(maxIteracji2.getText());
 		parametry.add(wspolczynnikInterpolacji2.getText());
 		parametry.add((String)rodzajAlgorytmu2.getSelectedItem());
+		
+		parametry.add((String)rodzajWyboru2.getSelectedItem());
+		parametry.add((String)rodzajOptymalizacji2.getSelectedItem());
+		parametry.add(celOptymalizacji2.getText());
+		parametry.add(procentMutacji2.getText());
+		parametry.add(maxBezpoprawy2.getText());
+		parametry.add(ileWyswietlanych2.getText());
 		return parametry;
 	}
 	

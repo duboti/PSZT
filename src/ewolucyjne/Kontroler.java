@@ -8,7 +8,7 @@ public class Kontroler extends Thread {
 	private boolean pracuj;
 	private boolean zakonczony;
 	private Widok widok;
-	
+	private int iloscWyswietlnych;
 	
 	Kontroler ( Widok widok )
 	{
@@ -22,8 +22,8 @@ public class Kontroler extends Thread {
 
 	public boolean inicjowanie( ArrayList < String > in )
 	{
-		Integer mi, lambda, maxIteracji;
-		Double minX, minY, maxX, maxY, sigmaX, sigmaY, epsilon, wspInterpolacji;
+		Integer mi, lambda, maxIteracji, rodzajWyboru, rodzajOptymalizacji, maxBezPoprawy;
+		Double minX, minY, maxX, maxY, sigmaX, sigmaY, epsilon, wspInterpolacji, celOptymalizacji, procentMutacji;
 		try
 		{
 			mi = Integer.parseInt(in.get(0));
@@ -37,14 +37,23 @@ public class Kontroler extends Thread {
 			epsilon = Double.parseDouble(in.get(8));
 			maxIteracji = Integer.parseInt(in.get(9));
 			wspInterpolacji = Double.parseDouble(in.get(10));
+			
+			celOptymalizacji = Double.parseDouble(in.get(14));
+			procentMutacji = Double.parseDouble(in.get(15));
+			maxBezPoprawy = Integer.parseInt(in.get(16));
+			iloscWyswietlnych = Integer.parseInt(in.get(17));
+			
 		}
 		catch (NumberFormatException e)
 		{
-			//e.printStackTrace();
+			e.printStackTrace();
 			widok.dodajNapis("Błąd: Co najmniej 1 z pól nie zawiera odpowiedniej liczby. Kod błędu:");
 			widok.dodajNapis(e.getMessage());
 			return false;
 		}
+		
+		
+		
 		if(mi == null || mi <= 0)
 			return false;
 	
@@ -91,11 +100,20 @@ public class Kontroler extends Thread {
 			algorytm = 0;
 		else
 			algorytm = 1;
-		int rodzajWyboru=0;
-		int rodzajOptymalizacji=2;
-		double celOptymalizacji=10000;
-		int maxBezPoprawy=10;
-		double procentMutacji=0.05f;
+		
+		
+		if(in.get(12).compareTo("μ najlepszych")==0)
+			rodzajWyboru = 0;
+		else 
+			rodzajWyboru = 1;
+		
+		if(in.get(13).compareTo("minimalizacja")==0)
+			rodzajOptymalizacji = 0;
+		else if(in.get(13).compareTo("maksymalizacja")==0)
+			rodzajOptymalizacji= 1;
+		else
+			rodzajOptymalizacji = 2;
+		
 		this.ewolucyjny = new Algorytm("ewolucyjne.Punkt",mi,lambda,algorytm,rodzajWyboru,rodzajOptymalizacji,
 				celOptymalizacji,maxIteracji,maxBezPoprawy,epsilon,procentMutacji, wspInterpolacji,
 				zakres,sigmy,new FunkcjaRosenbrocka());
@@ -137,10 +155,8 @@ public class Kontroler extends Thread {
 		String napis;
 		ArrayList<Osobnik> tmp = this.ewolucyjny.pobierzPopulacje();
 		napis = "Numer iteracji: " + this.ewolucyjny.pobierzNumerIteracji() + "\n";
-		int iloscWyswietlnych;
-		if (tmp.size() > 14)
-			iloscWyswietlnych = 14;
-		else
+		
+		if (tmp.size() < iloscWyswietlnych)
 			iloscWyswietlnych = tmp.size();
 		for(int i = 0; i < iloscWyswietlnych ; i++)
 			napis+= tmp.get(i).toString();
