@@ -9,21 +9,21 @@ package ewolucyjne;
  */
 public class Zakres {
 	
-	private Float begin;
-	private Float end;
+	private Double begin;
+	private Double end;
 	
-	public Zakres ( Float begin , Float end )
+	public Zakres ( Double minX , Double maxX )
 	{
-		this.begin = begin;
-		this.end = end;
+		this.begin = minX;
+		this.end = maxX;
 	}
 	
-	public Float poczatek()
+	public Double poczatek()
 	{
 		return this.begin;
 	}
 	
-	public Float koniec()
+	public Double koniec()
 	{
 		return this.end;
 	}

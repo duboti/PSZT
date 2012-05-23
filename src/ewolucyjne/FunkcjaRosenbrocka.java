@@ -6,7 +6,7 @@ public class FunkcjaRosenbrocka implements FunkcjaPrzystosowania
 {
 
 	@Override
-	public float Oblicz(ArrayList<Float> lista) 
+	public double Oblicz(ArrayList<Double> lista) 
 	{
 		if( lista.size()!= 2)
 			return 0;		

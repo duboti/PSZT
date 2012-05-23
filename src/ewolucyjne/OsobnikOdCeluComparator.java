@@ -7,9 +7,9 @@ import java.util.Comparator;
  *
  */
 public class OsobnikOdCeluComparator implements Comparator<Osobnik> {
-	private float cel;
+	private double cel;
 	
-	public OsobnikOdCeluComparator(float cel) {
+	public OsobnikOdCeluComparator(double cel) {
 		super();
 		this.cel = cel;
 	}

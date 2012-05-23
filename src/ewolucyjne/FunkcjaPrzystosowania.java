@@ -4,5 +4,5 @@ import java.util.*;
 
 public interface FunkcjaPrzystosowania 
 {
-	float Oblicz (ArrayList<Float> lista);
+	double Oblicz (ArrayList<Double> lista);
 }

@@ -22,10 +22,10 @@ public class Algorytm
 	 * 2-konkretna wartoœæ
 	 */
 	private int rodzajOptymalizacji;	
-	private float celOptymalizacji;
-	private float wspolczynnikInterpolacji;
+	private double celOptymalizacji;
+	private double wspolczynnikInterpolacji;
 	private int nrIteracji;
-	private float najlepszyWynik;
+	private double najlepszyWynik;
 	/**
 	 *  etapy algorytmu 1 - czeka na stworzenie nowego pokolenia
 	 *  etapy algorytmu 2 - czeka na mutacje populacji
@@ -34,20 +34,20 @@ public class Algorytm
 	private int etapAlgorytmu;
 	private int etapBezPoprawy;
 	private int maxIteracji;
-	private float dokladnosc;
+	private double dokladnosc;
 	String typOsobnika;
 	private int maxBezPoprawy;
 	FunkcjaPrzystosowania funkcja;
 	private boolean stop;
-	float procentMutacji;
+	double procentMutacji;
 	
 	private ArrayList<Osobnik> populacja;
 	
 	
 	
 	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int rodzajWyboru, int rodzajOptymalizacji, 
-			float celOptymalizacji, int maxIteracji, int maxBezPoprawy, float dokladnosc, float procentMutacji,
-			float wspolczynnikInterpolacji, ArrayList<Zakres> zakres, ArrayList<Float> sigmy, FunkcjaPrzystosowania funkcja)
+			double celOptymalizacji, int maxIteracji, int maxBezPoprawy, double dokladnosc, double procentMutacji,
+			double wspolczynnikInterpolacji, ArrayList<Zakres> zakres, ArrayList<Double> sigmy, FunkcjaPrzystosowania funkcja)
 	{
 		this.typOsobnika = typOsobnika;
 		this.mi = mi;
@@ -73,10 +73,10 @@ public class Algorytm
 		Random generator = new Random(); 
 		for (int i=0; i<this.mi ; i++)
 		{
-			ArrayList<Float> parametry = new ArrayList<Float>();
+			ArrayList<Double> parametry = new ArrayList<Double>();
 			for(int j = 0 ; j < zakres.size(); j++ )
 				parametry.add( ( (zakres.get(j)).koniec() - (zakres.get(j)).poczatek() )*
-											generator.nextFloat() + (zakres.get(j)).poczatek());
+											generator.nextDouble() + (zakres.get(j)).poczatek());
 			populacja.add(this.stworzOsobnika(parametry, sigmy));	
 		}
 		Collections.sort(populacja, new OsobnikMinComparator());
@@ -94,8 +94,8 @@ public class Algorytm
 	Osobnik stworzPotomka(Osobnik mama, Osobnik tata) 
 	{
 		Osobnik potomek = null;
-		ArrayList<Float> parametry = new ArrayList<Float>();
-		ArrayList<Float> sigmy = new ArrayList<Float>();
+		ArrayList<Double> parametry = new ArrayList<Double>();
+		ArrayList<Double> sigmy = new ArrayList<Double>();
 		Comparator<Osobnik> komparator=null;
 		if (rodzajOptymalizacji==0)
 		{
@@ -142,7 +142,7 @@ public class Algorytm
 	 * @param sigmy
 	 * @return Osobnik
 	 */
-	Osobnik stworzOsobnika(ArrayList<Float> parametry, ArrayList<Float> sigmy) 
+	Osobnik stworzOsobnika(ArrayList<Double> parametry, ArrayList<Double> sigmy) 
 	{
 		Osobnik nowyOsobnik = null;
 		@SuppressWarnings("rawtypes")
@@ -362,14 +362,14 @@ public class Algorytm
 			{
 				for (Osobnik os: populacja)
 				{
-					if (generator.nextFloat() < procentMutacji)
+					if (generator.nextDouble() < procentMutacji)
 						populacja.get(populacja.indexOf(os)).mutuj();
 				}
 			} else if(rodzajAlgorytmu==1)
 			{
 				for (Osobnik os: potomkowie)
 				{
-					if (generator.nextFloat() < procentMutacji)
+					if (generator.nextDouble() < procentMutacji)
 						potomkowie.get(potomkowie.indexOf(os)).mutuj();
 				}
 			}
@@ -411,7 +411,7 @@ public class Algorytm
 		return this.etapAlgorytmu;
 	}
 	
-	public float getCelOptymalizacji() {
+	public double getCelOptymalizacji() {
 		return celOptymalizacji;
 	}
 

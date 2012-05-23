@@ -23,20 +23,20 @@ public class Kontroler extends Thread {
 	public boolean inicjowanie( ArrayList < String > in )
 	{
 		Integer mi, lambda, maxIteracji;
-		Float minX, minY, maxX, maxY, sigmaX, sigmaY, epsilon, wspInterpolacji;
+		Double minX, minY, maxX, maxY, sigmaX, sigmaY, epsilon, wspInterpolacji;
 		try
 		{
 			mi = Integer.parseInt(in.get(0));
 			lambda = Integer.parseInt(in.get(1));
-			minX = Float.parseFloat(in.get(2));
-			minY = Float.parseFloat(in.get(3));
-			maxX = Float.parseFloat(in.get(4));
-			maxY = Float.parseFloat(in.get(5));
-			sigmaX = Float.parseFloat(in.get(6));
-			sigmaY = Float.parseFloat(in.get(7));
-			epsilon = Float.parseFloat(in.get(8));
+			minX = Double.parseDouble(in.get(2));
+			minY = Double.parseDouble(in.get(3));
+			maxX = Double.parseDouble(in.get(4));
+			maxY = Double.parseDouble(in.get(5));
+			sigmaX = Double.parseDouble(in.get(6));
+			sigmaY = Double.parseDouble(in.get(7));
+			epsilon = Double.parseDouble(in.get(8));
 			maxIteracji = Integer.parseInt(in.get(9));
-			wspInterpolacji = Float.parseFloat(in.get(10));
+			wspInterpolacji = Double.parseDouble(in.get(10));
 		}
 		catch (NumberFormatException e)
 		{
@@ -73,7 +73,7 @@ public class Kontroler extends Thread {
 		if(sigmaY == null || sigmaY > 1 || sigmaY < 0)
 			return false;
 		
-		ArrayList<Float> sigmy = new ArrayList<Float>();
+		ArrayList<Double> sigmy = new ArrayList<Double>();
 		sigmy.add(sigmaX);
 		sigmy.add(sigmaY);
 
@@ -93,9 +93,9 @@ public class Kontroler extends Thread {
 			algorytm = 1;
 		int rodzajWyboru=0;
 		int rodzajOptymalizacji=2;
-		float celOptymalizacji=10000;
+		double celOptymalizacji=10000;
 		int maxBezPoprawy=10;
-		float procentMutacji=0.05f;
+		double procentMutacji=0.05f;
 		this.ewolucyjny = new Algorytm("ewolucyjne.Punkt",mi,lambda,algorytm,rodzajWyboru,rodzajOptymalizacji,
 				celOptymalizacji,maxIteracji,maxBezPoprawy,epsilon,procentMutacji, wspInterpolacji,
 				zakres,sigmy,new FunkcjaRosenbrocka());

@@ -5,26 +5,26 @@ import java.util.ArrayList;
 //TODO: sprawdzenie czy mo¿na zwracaæ coœ takiego jak NAN
 public interface Osobnik 
 {
-	void inicjowanie( ArrayList<Float> parametry, ArrayList<Float> sigmy , FunkcjaPrzystosowania fun);
+	void inicjowanie( ArrayList<Double> parametry, ArrayList<Double> sigmy , FunkcjaPrzystosowania fun);
 	/**
 	 * pobierz wartoœæ funkcji przystosowania
 	 * @return
 	 */
-	float pobierzWartosc();
+	double pobierzWartosc();
 	
 	/**
 	 * pobierz parametr x_n
 	 * @param n nr zmiennej
 	 * @return 
 	 */
-	float pobierzParametr(int n);
+	double pobierzParametr(int n);
 	
 	/**
 	 * pobierz parametr sigma_n
 	 * @param n nr zmiennej sigma
 	 * @return 
 	 */
-	float pobierzSigme(int n);
+	double pobierzSigme(int n);
 	
 	/**
 	 * Metoda mutuje danego osobnika
