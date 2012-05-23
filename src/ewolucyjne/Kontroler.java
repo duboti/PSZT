@@ -36,24 +36,19 @@ public class Kontroler extends Thread {
 			sigmaY = Double.parseDouble(in.get(7));
 			epsilon = Double.parseDouble(in.get(8));
 			maxIteracji = Integer.parseInt(in.get(9));
-			wspInterpolacji = Double.parseDouble(in.get(10));
-			
+			wspInterpolacji = Double.parseDouble(in.get(10));	
 			celOptymalizacji = Double.parseDouble(in.get(14));
 			procentMutacji = Double.parseDouble(in.get(15));
 			maxBezPoprawy = Integer.parseInt(in.get(16));
-			iloscWyswietlnych = Integer.parseInt(in.get(17));
-			
+			iloscWyswietlnych = Integer.parseInt(in.get(17));	
 		}
 		catch (NumberFormatException e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 			widok.dodajNapis("Błąd: Co najmniej 1 z pól nie zawiera odpowiedniej liczby. Kod błędu:");
 			widok.dodajNapis(e.getMessage());
 			return false;
 		}
-		
-		
-		
 		if(mi == null || mi <= 0)
 			return false;
 	
@@ -135,17 +130,7 @@ public class Kontroler extends Thread {
 	{
 		this.pracuj = false;
 	}
-	/*
-	public boolean czyPracuje()
-	{
-		return this.pracuj;
-	}
-	
-	public boolean czyZakonczyl()
-	{
-		return this.zakonczony;
-	}*/
-	
+
 	public void uruchom( )
 	{
 		if(this.zakonczony)

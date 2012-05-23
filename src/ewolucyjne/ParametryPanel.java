@@ -6,6 +6,10 @@ import javax.swing.*;
 
 import layout.*;
 
+/**
+ * Klasa odpowiedzialna za stworzenie panelu z modyfikowalnymi parametrami.
+ * @author Daniel Pogrebniak
+ */
 class ParametryPanel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
@@ -112,6 +116,10 @@ class ParametryPanel extends JPanel
 		add(ileWyswietlanych2, "5 5 l c");
 	}
 	
+	/**
+	 * Metoda tworzy ArrayListe wszystkich paramertów.
+	 * @return ArrayLista wszystkich paramertów zapisanych jako Stringi 
+	 */
 	ArrayList<String> Inicjuj ()
 	{
 		ArrayList<String> parametry = new ArrayList<String>();
@@ -136,6 +144,10 @@ class ParametryPanel extends JPanel
 		return parametry;
 	}
 	
+	
+	/**
+	 * Zablokowanie możliwości edycji parametrów.
+	 */
 	void zablokujParametry ()
 	{
 		mi2.setEnabled(false);
@@ -158,6 +170,9 @@ class ParametryPanel extends JPanel
 		ileWyswietlanych2.setEnabled(false);
 	}
 	
+	/**
+	 * Odblokowanie możliwości edycji parametrów.
+	 */	
 	void odblokujParametry ()
 	{
 		mi2.setEnabled(true);

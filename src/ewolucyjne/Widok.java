@@ -6,6 +6,10 @@ import java.util.*;
 
 import javax.swing.*;
 
+/**
+ * Klasa odpowiedzialna za stworzenie i obsługę okna programu.
+ * @author Daniel Pogrebniak
+ */
 public class Widok extends JFrame
 {
 	private static final long serialVersionUID = 1L;
@@ -141,6 +145,9 @@ public class Widok extends JFrame
 		setVisible(true);
 	}
 	
+	/**
+	 * Metoda zmienia dostępność przycisków po zakończeniu algorytmu.
+	 */
 	void koniecAlgorytmu ()
 	{
 		przycisk2.setEnabled(false);
@@ -149,6 +156,10 @@ public class Widok extends JFrame
 		przycisk5.setEnabled(true);
 	}
 	
+	/**
+	 * Metoda dopisuje na górze konsoli nowy napis. 
+	 * @param napis, który ma zostać dopisany
+	 */
 	public void dodajNapis (String napis)
 	{
 		konsola.setText(napis+konsola.getText()+"\n");
