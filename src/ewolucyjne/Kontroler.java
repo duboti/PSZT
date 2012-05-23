@@ -96,23 +96,29 @@ public class Kontroler extends Thread {
 			return false;
 		
 		int algorytm;
-		if(in.get(11).compareTo("μ + λ")==0)
+		if(in.get(11).equals("μ + λ"))
 			algorytm = 0;
-		else
+		else if(in.get(11).equals("μ, λ"))
 			algorytm = 1;
-		
-		
-		if(in.get(12).compareTo("μ najlepszych")==0)
-			rodzajWyboru = 0;
-		else 
-			rodzajWyboru = 1;
-		
-		if(in.get(13).compareTo("minimalizacja")==0)
-			rodzajOptymalizacji = 0;
-		else if(in.get(13).compareTo("maksymalizacja")==0)
-			rodzajOptymalizacji= 1;
 		else
+			return false;
+		
+		
+		if(in.get(12).equals("μ najlepszych"))
+			rodzajWyboru = 0;
+		else if(in.get(12).equals("μ losowych"))
+			rodzajWyboru = 1;
+		else
+			return false;
+		
+		if(in.get(13).equals("minimalizacja"))
+			rodzajOptymalizacji = 0;
+		else if(in.get(13).equals("maksymalizacja"))
+			rodzajOptymalizacji= 1;
+		else if(in.get(13).equals("do wartości"))
 			rodzajOptymalizacji = 2;
+		else
+			return false;
 		
 		this.ewolucyjny = new Algorytm("ewolucyjne.Punkt",mi,lambda,algorytm,rodzajWyboru,rodzajOptymalizacji,
 				celOptymalizacji,maxIteracji,maxBezPoprawy,epsilon,procentMutacji, wspInterpolacji,
