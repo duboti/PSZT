@@ -88,7 +88,7 @@ public class Punkt implements Osobnik {
 	public String toString()
 	{
 		String napis;
-		napis = " f="+warFun+" x="+wspX+" y="+wspY+"\n";
+		napis = "f="+warFun+"\tx="+wspX+"\ty="+wspY+"\n";
 		return napis;
 	}
 	

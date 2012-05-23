@@ -179,7 +179,7 @@ public class Kontroler extends Thread {
 		{
 			widok.koniecAlgorytmu();
 			widok.dodajNapis("Algorytm zakończył się poprawnie.\nZnalezione minimum to:\n"
-					+ewolucyjny.pobierzPopulacje().get(0).toString());
+					+ewolucyjny.pobierzPopulacje().get(0).toString()+"\n");
 		}
 		else
 		{
@@ -210,16 +210,14 @@ public class Kontroler extends Thread {
 			while(!this.pracuj && !this.zakonczony)
 				try {
 					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) 
+				{
 					e.printStackTrace();
-				}
-				
-				
+				}	
 		}while(!this.zakonczony);
 		widok.koniecAlgorytmu();
 		widok.dodajNapis("Algorytm zakończył się poprawnie.\nZnalezione minimum to:\n"
-				+ewolucyjny.pobierzPopulacje().get(0).toString());
+				+ewolucyjny.pobierzPopulacje().get(0).toString()+"\n");
 		return;
 	}
 }

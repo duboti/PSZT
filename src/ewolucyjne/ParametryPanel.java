@@ -67,7 +67,6 @@ class ParametryPanel extends JPanel
 		maxIteracji2 = new JTextField("10000", 5);
 		wspolczynnikInterpolacji2 = new JTextField("0.5", 5);
 		rodzajAlgorytmu2 = new JComboBox(new String[] {"μ + λ","μ, λ"});
-		
 		rodzajWyboru2 = new JComboBox(new String[] {"μ najlepszych","μ losowych"});
 		rodzajOptymalizacji2 = new JComboBox(new String[] {"minimalizacja","maksymalizacja","do wartości"});
 		celOptymalizacji2 = new JTextField("0", 5);
@@ -128,7 +127,6 @@ class ParametryPanel extends JPanel
 		parametry.add(maxIteracji2.getText());
 		parametry.add(wspolczynnikInterpolacji2.getText());
 		parametry.add((String)rodzajAlgorytmu2.getSelectedItem());
-		
 		parametry.add((String)rodzajWyboru2.getSelectedItem());
 		parametry.add((String)rodzajOptymalizacji2.getSelectedItem());
 		parametry.add(celOptymalizacji2.getText());
@@ -152,6 +150,12 @@ class ParametryPanel extends JPanel
 		maxIteracji2.setEnabled(false);
 		wspolczynnikInterpolacji2.setEnabled(false);
 		rodzajAlgorytmu2.setEnabled(false);
+		rodzajWyboru2.setEnabled(false);
+		rodzajOptymalizacji2.setEnabled(false);
+		celOptymalizacji2.setEnabled(false);
+		procentMutacji2.setEnabled(false);
+		maxBezpoprawy2.setEnabled(false);
+		ileWyswietlanych2.setEnabled(false);
 	}
 	
 	void odblokujParametry ()
@@ -168,6 +172,12 @@ class ParametryPanel extends JPanel
 		maxIteracji2.setEnabled(true);
 		wspolczynnikInterpolacji2.setEnabled(true);
 		rodzajAlgorytmu2.setEnabled(true);
+		rodzajWyboru2.setEnabled(true);
+		rodzajOptymalizacji2.setEnabled(true);
+		celOptymalizacji2.setEnabled(true);
+		procentMutacji2.setEnabled(true);
+		maxBezpoprawy2.setEnabled(true);
+		ileWyswietlanych2.setEnabled(true);
 	}
 }
 

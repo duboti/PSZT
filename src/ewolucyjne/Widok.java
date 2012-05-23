@@ -130,7 +130,8 @@ public class Widok extends JFrame
 		add(przycisk6);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(500, 300));
+		scrollPane.setPreferredSize(new Dimension(550, 300));
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		konsola.setEditable(false);
 		scrollPane.setViewportView(konsola);
 		add(scrollPane);
