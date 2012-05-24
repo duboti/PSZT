@@ -76,7 +76,7 @@ public class Widok extends JFrame
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				kontroler.krok();			
+				kontroler.krok();
 			}
 		});
 		
@@ -162,7 +162,7 @@ public class Widok extends JFrame
 	 */
 	public void dodajNapis (String napis)
 	{
-		konsola.setText(napis+konsola.getText()+"\n");
+		konsola.setText(napis+konsola.getText());
 	}
 }
 

@@ -42,7 +42,7 @@ public class Algorytm
 	double procentMutacji;
 	
 	private ArrayList<Osobnik> populacja;
-	
+	ArrayList<Zakres> zakres;
 	
 	
 	Algorytm (String typOsobnika, int mi, int lambda, int rodzajAlgorytmu, int rodzajWyboru, int rodzajOptymalizacji, 
@@ -68,7 +68,7 @@ public class Algorytm
 		this.etapBezPoprawy = 0;
 		populacja = new ArrayList<Osobnik>();
 		this.stop = false;
-		
+		this.zakres = zakres;
 		
 		Random generator = new Random(); 
 		for (int i=0; i<this.mi ; i++)
@@ -132,7 +132,7 @@ public class Algorytm
 		}
 		
 		potomek = stworzOsobnika(parametry,sigmy);
-		potomek.mutuj();
+		potomek.mutuj(zakres);
 		return potomek;
 	}
 	
@@ -363,14 +363,14 @@ public class Algorytm
 				for (Osobnik os: populacja)
 				{
 					if (generator.nextDouble() < procentMutacji)
-						populacja.get(populacja.indexOf(os)).mutuj();
+						populacja.get(populacja.indexOf(os)).mutuj(zakres);
 				}
 			} else if(rodzajAlgorytmu==1)
 			{
 				for (Osobnik os: potomkowie)
 				{
 					if (generator.nextDouble() < procentMutacji)
-						potomkowie.get(potomkowie.indexOf(os)).mutuj();
+						potomkowie.get(potomkowie.indexOf(os)).mutuj(zakres);
 				}
 			}
 			etapAlgorytmu = 3;

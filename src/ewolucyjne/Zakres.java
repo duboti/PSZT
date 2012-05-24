@@ -28,7 +28,7 @@ public class Zakres {
 		return this.end;
 	}
 	
-	public boolean czyNalezy( Float in )
+	public boolean czyNalezy( Double in )
 	{
 		return (in >= this.begin && in <= this.end);
 	}

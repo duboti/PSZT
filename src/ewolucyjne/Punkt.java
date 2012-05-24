@@ -63,7 +63,7 @@ public class Punkt implements Osobnik {
 	}
 
 	@Override
-	public void mutuj() {
+	public void mutuj(ArrayList<Zakres> zakres) {
 			Random gen = new Random();
 			double N = gen.nextGaussian();
 			double t1 = 1 / 2;
@@ -71,7 +71,21 @@ public class Punkt implements Osobnik {
 			sigmaX *= Math.exp(t1*N + t*gen.nextGaussian());
 			sigmaY *= Math.exp(t1*N + t*gen.nextGaussian());
 			wspX += sigmaX * gen.nextGaussian();
+			if (!zakres.get(0).czyNalezy(wspX))
+			{
+				if (wspX < zakres.get(0).poczatek())
+					wspX = zakres.get(0).poczatek();
+				if (wspX > zakres.get(0).koniec())
+					wspX = zakres.get(0).koniec();
+			}
 			wspY += sigmaY * gen.nextGaussian();
+			if (!zakres.get(1).czyNalezy(wspY))
+			{
+				if (wspY < zakres.get(1).poczatek())
+					wspY = zakres.get(1).poczatek();
+				if (wspY > zakres.get(1).koniec())
+					wspY = zakres.get(1).koniec();
+			}
 			ArrayList<Double> tmp = new ArrayList<Double>();
 			tmp.add(wspX);
 			tmp.add(wspY);

@@ -30,7 +30,7 @@ public interface Osobnik
 	 * Metoda mutuje danego osobnika
 	 * 
 	 */
-	void mutuj();
+	void mutuj(ArrayList<Zakres> zakres);
 
 	/**
 	 *  
