@@ -143,15 +143,22 @@ public class Kontroler extends Thread {
 	
 	public String statystykiAlgorytmu()
 	{
-		String napis;
-		ArrayList<Osobnik> tmp = this.ewolucyjny.pobierzPopulacje();
-		napis = "Numer iteracji: " + this.ewolucyjny.pobierzNumerIteracji() + "\n";
-		
-		if (tmp.size() < iloscWyswietlnych)
-			iloscWyswietlnych = tmp.size();
-		for(int i = 0; i < iloscWyswietlnych ; i++)
-			napis+= tmp.get(i).toString();
-		return napis;
+		String napis = "";
+		if (iloscWyswietlnych==0)
+		{
+			return napis;
+		} 
+		else
+		{
+			ArrayList<Osobnik> tmp = this.ewolucyjny.pobierzPopulacje();
+			napis = "Numer iteracji: " + this.ewolucyjny.pobierzNumerIteracji() + "\n";
+			
+			if (tmp.size() < iloscWyswietlnych)
+				iloscWyswietlnych = tmp.size();
+			for(int i = 0; i < iloscWyswietlnych ; i++)
+				napis+= tmp.get(i).toString();
+			return napis;
+		}
 	}
 	
 	/**
@@ -201,7 +208,7 @@ public class Kontroler extends Thread {
 				}	
 		}while(!this.zakonczony);
 		widok.koniecAlgorytmu();
-		widok.dodajNapis("Algorytm zakończył się poprawnie.\nZnalezione minimum to:\n"
+		widok.dodajNapis("Algorytm zakończył się poprawnie. Po "+ewolucyjny.pobierzNumerIteracji()+" iteracjach.\nZnalezione minimum to:\n"
 				+ewolucyjny.pobierzPopulacje().get(0).toString()+"\n");
 		return;
 	}

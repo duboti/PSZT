@@ -67,15 +67,15 @@ class ParametryPanel extends JPanel
 		maxY2 = new JTextField("2.0", 5);
 		sigmaX2 = new JTextField("0.5", 5);
 		sigmaY2 = new JTextField("0.5", 5);
-		epsilon2 = new JTextField("0.01", 5);
+		epsilon2 = new JTextField("0.001", 5);
 		maxIteracji2 = new JTextField("10000", 5);
-		wspolczynnikInterpolacji2 = new JTextField("0.5", 5);
+		wspolczynnikInterpolacji2 = new JTextField("0.7", 5);
 		rodzajAlgorytmu2 = new JComboBox(new String[] {"μ + λ","μ, λ"});
 		rodzajWyboru2 = new JComboBox(new String[] {"μ najlepszych","μ losowych"});
 		rodzajOptymalizacji2 = new JComboBox(new String[] {"minimalizacja","maksymalizacja","do wartości"});
 		celOptymalizacji2 = new JTextField("0", 5);
 		procentMutacji2 = new JTextField("0.05", 5);
-		maxBezpoprawy2 = new JTextField("10", 5);
+		maxBezpoprawy2 = new JTextField("100", 5);
 		ileWyswietlanych2 = new JTextField("3", 5);
 		
 		add(mi1, "0 0 r c");
